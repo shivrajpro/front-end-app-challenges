@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
 
+.user-data-container{
+    outline: none;
+}
 .user-data {
     display       : flex;
     flex-direction: column;
+
     // border        : 1px solid rgb(9, 9, 51);
 
     .user-image {
         text-align: center;
+        
         img {
             // border: 1px solid darkblue;
-            height: 180px;
+            height: 140px;
             width : 320px;
         }
     }

@@ -15,15 +15,5 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.allUsers = this.userService.getUsers();
-    // console.log('>>', this.allUsers);
-  }
-
-  onAddUserClick(){
-    console.log('>>add user');
-    this.router.navigate(['new'], {relativeTo:this.route})
-  }
-
-  onUserCardClick(){
-    this.router.navigate['']
   }
 }
