@@ -1,8 +1,8 @@
 <p>user-edit works!</p>
 <form (ngSubmit)="onCreateNewUser(f)" #f="ngForm" >
     <label for="username">Name</label>
-    <input type="text" ngModel id="username" name="username" required >
+    <input type="text" id="username" name="username" [(ngModel)]="userData.name" required >
     <label for="image">Image URL</label>
-    <input type="text" ngModel id="imageURL" name="imageURL" required >
+    <input type="text" id="imageURL" name="imageURL" [(ngModel)]="userData.image" ngModel required >
     <button type="submit">Create</button>
 </form>

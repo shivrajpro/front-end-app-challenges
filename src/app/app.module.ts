@@ -9,13 +9,15 @@ import { UsersComponent } from './components/users/users.component';
 import { UserEditComponent } from './components/users/user-edit/user-edit.component';
 import { UserService } from './services/user.service';
 import { FormsModule } from '@angular/forms';
+import { UsersListComponent } from './components/users/users-list/users-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     UsersComponent,
-    UserEditComponent
+    UserEditComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,
