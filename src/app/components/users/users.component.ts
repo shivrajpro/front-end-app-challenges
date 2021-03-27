@@ -5,8 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
-  providers:[UserService]
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
 
@@ -18,4 +17,7 @@ export class UsersComponent implements OnInit {
     console.log('>>', this.allUsers);
   }
 
+  onAddUser(){
+    console.log('>>add user');
+  }
 }

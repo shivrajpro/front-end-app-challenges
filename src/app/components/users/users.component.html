@@ -1,6 +1,9 @@
 <p>all users works!</p>
+<button (click)="onAddUser()">Add User</button>
 <div class="all-users">
-    <div *ngFor="let user of allUsers" >
-        <app-user [user]="user" ></app-user>
+    <router-outlet></router-outlet>
+
+    <div *ngFor="let user of allUsers">
+        <app-user [user]="user"></app-user>
     </div>
 </div>
