@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+.user-data {
+    display       : flex;
+    flex-direction: column;
+    // border        : 1px solid rgb(9, 9, 51);
+
+    .user-image {
+        text-align: center;
+        img {
+            // border: 1px solid darkblue;
+            height: 180px;
+            width : 320px;
+        }
+    }
+    
+    .username{
+        text-align: center;
+        line-height: 30px;
+        // border: 1px solid orangered;
+        margin: 5px 5px;
+        font-family: 'Nunito', sans-serif;
+        font-size: 2rem;
+    }
+}

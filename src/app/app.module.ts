@@ -10,6 +10,8 @@ import { UserEditComponent } from './components/users/user-edit/user-edit.compon
 import { UserService } from './services/user.service';
 import { FormsModule } from '@angular/forms';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { UsersListComponent } from './components/users/users-list/users-list.com
     UserComponent,
     UsersComponent,
     UserEditComponent,
-    UsersListComponent
+    UsersListComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

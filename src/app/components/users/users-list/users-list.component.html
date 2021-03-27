@@ -1,8 +1,6 @@
-<button (click)="onAddUserClick()">Add User</button>
+<!-- <button (click)="onAddUserClick()">Add User</button> -->
 <div class="all-users">
-    <router-outlet></router-outlet>
-
-    <div *ngFor="let user of allUsers">
+    <div class="user-card" *ngFor="let user of allUsers">
         <app-user [user]="user" [userId]="user.id" ></app-user>
     </div>
 </div>

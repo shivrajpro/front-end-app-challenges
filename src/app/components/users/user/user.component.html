@@ -1,10 +1,13 @@
-<div
-[routerLink]="[userId]"
-routerLinkActive="active"
-*ngIf="user"
->
-    <label for=""> {{user.id}} </label>
-    <label> {{user.name}} -  </label>
-    <img [src]="user.image" width="40" height="40" alt="user">
-    <br>
+<div *ngIf="user" class="user-data-container" [routerLink]="[userId]" routerLinkActive="active">
+    <div class="user-data">
+        <div class="user-image">
+            <img [src]="user.image" alt="user">
+        </div>
+        <!-- <div class="user-id">
+            <label> {{user.id}} </label>
+        </div> -->
+        <div class="username">
+            <label> {{user.name}} - </label>
+        </div>
+    </div>
 </div>

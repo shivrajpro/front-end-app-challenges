@@ -1,0 +1,25 @@
+.all-users{
+    display: flex;
+    flex-wrap: wrap;
+    height: 76%;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-card{
+    display: flex;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 45%;
+    height: 60%;
+    margin: 8px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;   cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.user-card:hover{
+    transform: scale(1.05);
+}
