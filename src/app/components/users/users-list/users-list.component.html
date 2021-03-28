@@ -1,5 +1,5 @@
 <!-- <button (click)="onAddUserClick()">Add User</button> -->
-<div class="all-users">
+<div class="all-users row">
     <div class="user-card" *ngFor="let user of allUsers">
         <app-user [user]="user" [userId]="user.id" ></app-user>
     </div>

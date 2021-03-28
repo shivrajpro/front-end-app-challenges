@@ -3,6 +3,7 @@
     width: 98vw;
     height: 84vh;
     margin: 4px;
+    // overflow: scroll;
 }
 
 .users{
@@ -12,6 +13,12 @@
     // border: 1px solid red;
     height: 100%;
     overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    
+    &::-webkit-scrollbar{
+        display: none;
+    }
 }
 
 .user-interaction{
