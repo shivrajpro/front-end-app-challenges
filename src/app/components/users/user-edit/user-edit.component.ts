@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserEditComponent implements OnInit {
   @Input() user: User;
 
-  @ViewChild('f', {static:false}) userForm: NgForm;
+  @ViewChild('f') userForm: NgForm;
 
   userId: string;
   userData: User = new User('','','');
@@ -25,7 +25,9 @@ export class UserEditComponent implements OnInit {
       console.log('>>params', params);
       this.userId = params['id'];
       this.editMode = !!params['id'];
-      this.initForm();
+      setTimeout(() => {
+        this.initForm();
+      });
     });
   }
 
@@ -39,11 +41,24 @@ export class UserEditComponent implements OnInit {
         console.log('>>userdata', this.userData);
     }
     console.log('>>form', this.userForm);
-
+    // this.userForm.setValue({
+    //   'username':'abc',
+    //   'imageURL':'url'
+    // })
 
   }
 
   onCreateNewUser(userForm: NgForm){
     console.log('>>', userForm);
+  }
+
+  onUpdateUser(){
+    this.userService.updateUser(this.userData.id, this.userData);
+    this.router.navigate(['../']);
+  }
+  
+  onDeleteUser(){
+    this.userService.deleteUser(this.userData.id);
+    this.router.navigate(['../']);
   }
 }

@@ -1,5 +1,5 @@
-<div class="container">
-    <h2>Vertical (basic) form</h2>
+<form class="container" #f="ngForm" (ngSubmit)="onCreateNewUser(f)" >
+    <h2>User Data Form</h2>
     <form>
       <div class="form-group">
         <label for="username">Email:</label>
@@ -13,8 +13,8 @@
           <button type="submit" class="btn btn-success">Add User</button>
         </div>
         <ng-template #editModeBtns>
-            <button type="submit" class="btn btn-primary">Update</button> |
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-primary" (click)="onUpdateUser()" >Update</button> |
+            <button type="button" class="btn btn-danger" (click)="onDeleteUser()" >Delete</button>
       </ng-template>
     </form>
-</div>
+  </form>

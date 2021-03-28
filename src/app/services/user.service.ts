@@ -75,14 +75,24 @@ export class UserService{
     }
     
     updateUser(id: string, newUser:User){
-
+        for (let i = 0; i < this.users.length; i++) {
+            if(this.users[i].id == id){
+                this.users[i].name = newUser.name;
+                this.users[i].image = newUser.image;
+            }
+        }
     }
 
     deleteUser(id: string){
-
+        const index = this.users.findIndex((u)=>{
+            return u.id==id
+        }
+        )
+        this.users.splice(index,1);
     }
 
     getUser(id: string): User{
+        
         for (let i = 0; i < this.users.length; i++) {
             if(this.users[i].id == id)
                 return this.users[i];
