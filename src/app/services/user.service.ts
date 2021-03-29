@@ -1,14 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { User } from "../models/user.model";
 
 @Injectable()
-export class UserService{
+export class UserService {
     readonly usersUrl = 'https://s3-ap-southeast-1.amazonaws.com/he-public-data/users49b8675.json';
 
     users: User[] = [];
 
-    constructor(private http: HttpClient){
+    usersDataChanged = new Subject<User[]>();
+
+    constructor(private http: HttpClient) {
         let allUsers = [
             {
                 "Image": "https://s3-ap-southeast-1.amazonaws.com/he-public-data/user14b9a23c.png",
@@ -52,49 +55,57 @@ export class UserService{
             }
         ]
 
-        allUsers.forEach((user)=>{
+        allUsers.forEach((user) => {
             this.users.push(new User(user.id, user.name, user.Image));
         })
     }
 
-    setUsers(){
+    setUsers() {
 
     }
 
-    getUsers(){
+    getUsers() {
 
         // this.http.get(this.usersUrl).subscribe((users)=>{
         //     console.log('>>from api', users);
-            
+
         // })
         return this.users.slice();
     }
 
-    addUser(newUser: User){
+    addUser(newUser: User) {
         this.users.push(newUser);
     }
-    
-    updateUser(id: string, newUser:User){
+
+    updateUser(id: string, newUser: User) {
+        let userFound = false;
         for (let i = 0; i < this.users.length; i++) {
-            if(this.users[i].id == id){
+            if (this.users[i].id == id) {
                 this.users[i].name = newUser.name;
                 this.users[i].image = newUser.image;
+                userFound = true;
             }
         }
+
+        if (userFound)
+            this.usersDataChanged.next(this.users);
     }
 
-    deleteUser(id: string){
-        const index = this.users.findIndex((u)=>{
-            return u.id==id
+    deleteUser(id: string) {
+        const index = this.users.findIndex((u) => {
+                    return u.id == id;
+                }
+            )
+        if(index){
+            this.users.splice(index, 1);
+            this.usersDataChanged.next(this.users);
         }
-        )
-        this.users.splice(index,1);
     }
 
-    getUser(id: string): User{
-        
+    getUser(id: string): User {
+
         for (let i = 0; i < this.users.length; i++) {
-            if(this.users[i].id == id)
+            if (this.users[i].id == id)
                 return this.users[i];
         }
         return null;

@@ -14,15 +14,16 @@
         img {
             // border: 1px solid darkblue;
             height: 140px;
-            width : 320px;
+            width : 220px;
+            border-radius: 50%;
         }
     }
     
     .username{
         text-align: center;
-        line-height: 30px;
+        // line-height: 30px;
         // border: 1px solid orangered;
-        margin: 5px 5px;
+        // margin: 5px 5px;
         font-family: 'Nunito', sans-serif;
         font-size: 3rem;
     }
