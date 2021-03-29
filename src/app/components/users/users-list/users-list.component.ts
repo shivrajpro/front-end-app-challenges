@@ -14,10 +14,10 @@ export class UsersListComponent implements OnInit {
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.allUsers = this.userService.getUsers();
-    this.userService.usersDataChanged.subscribe((newUsersData)=>{
+    this.allUsers = this.userService.getUsers().reverse();
+    this.userService.usersDataChanged.subscribe((newUsersData:User[])=>{
       console.log('>>newusersdata',newUsersData);
-      this.allUsers = newUsersData;
+      this.allUsers = newUsersData.reverse();
     });
   }
 }

@@ -75,6 +75,7 @@ export class UserService {
 
     addUser(newUser: User) {
         this.users.push(newUser);
+        this.usersDataChanged.next(this.users.slice());
     }
 
     updateUser(id: string, newUser: User) {
@@ -88,7 +89,7 @@ export class UserService {
         }
 
         if (userFound)
-            this.usersDataChanged.next(this.users);
+            this.usersDataChanged.next(this.users.slice());
     }
 
     deleteUser(id: string) {
@@ -98,7 +99,7 @@ export class UserService {
             )
         if(index){
             this.users.splice(index, 1);
-            this.usersDataChanged.next(this.users);
+            this.usersDataChanged.next(this.users.slice());
         }
     }
 

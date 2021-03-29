@@ -10,19 +10,18 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
-  @Input() user: User;
 
   @ViewChild('f') userForm: NgForm;
 
   userId: string;
-  userData: User = new User('','','');
+  userData: User = new User('', '', '');
   editMode: boolean = false;
 
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params)=>{
-      console.log('>>params', params);
+    this.route.params.subscribe((params: Params) => {
+      // console.log('>>params', params);
       this.userId = params['id'];
       this.editMode = !!params['id'];
       setTimeout(() => {
@@ -31,33 +30,40 @@ export class UserEditComponent implements OnInit {
     });
   }
 
-  initForm(){
+  initForm() {
     let username = '', imageURL = '';
 
-    if(this.editMode){
+    if (this.editMode) {
       this.userData = this.userService.getUser(this.userId);
 
-      if(this.userData)
-        console.log('>>userdata', this.userData);
+      username = this.userData.name;
+      imageURL = this.userData.image;
     }
+    this.userForm.setValue({
+      'username':username,
+      'imageURL':imageURL
+    })    
     console.log('>>form', this.userForm);
-    // this.userForm.setValue({
-    //   'username':'abc',
-    //   'imageURL':'url'
-    // })
+  }
+
+  onCreateNewUser(f: NgForm) {
+    // console.log('>>on create', f);
+    let userId = Math.floor(1000 + (1100 - 1000)*Math.random()) + '';
+
+    const {username,imageURL} = f.value;
+    const newUser = new User(userId, username, imageURL);
+    
+    this.userService.addUser(newUser);
+    this.router.navigate(['../']);
 
   }
 
-  onCreateNewUser(userForm: NgForm){
-    console.log('>>', userForm);
-  }
-
-  onUpdateUser(){
+  onUpdateUser() {
     this.userService.updateUser(this.userData.id, this.userData);
     this.router.navigate(['../']);
   }
-  
-  onDeleteUser(){
+
+  onDeleteUser() {
     this.userService.deleteUser(this.userData.id);
     this.router.navigate(['../']);
   }

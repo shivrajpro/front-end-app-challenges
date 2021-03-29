@@ -2,6 +2,10 @@
     font-size: 2rem;
 }
 
+input.ng-invalid.ng-touched{
+    border : 1px solid red;
+}
+
 h2{
     font-size: 4rem;
 }
