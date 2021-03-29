@@ -8,7 +8,12 @@
       <div class="form-group">
         <label for="imageURL">Image URL:</label>
         <input type="text" class="form-control" id="imageURL" name="imageURL" [(ngModel)]="userData.image" ngModel required >
+
       </div>
+      <div class="form-group">
+        <img [src]="userData.image" alt="image" height="200" width="200">
+      </div>
+      <br>
       <div *ngIf="!editMode; else editModeBtns" >
           <button type="submit" class="btn btn-success">Add User</button>
         </div>
