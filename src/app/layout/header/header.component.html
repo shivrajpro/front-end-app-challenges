@@ -1,9 +1,15 @@
 <header>
     <nav class="navbar px-5 py-2 navbar-expand-sm bg-dark navbar-dark">
+        <div class="navbar-header">
+            <a class="navbar-brand" [routerLink] = "'users'" >WebSiteName</a>
+        </div>
         <form class="mx-2 form-inline">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search User" list="usersList">
+            <datalist id="usersList">
+                <option *ngFor="let user of allUsers" [value]="user.name"></option>
+            </datalist>
             <button class="btn btn-success" type="submit">Search</button>
+            <button class="btn btn-primary mx-2" (click)="onAddUserClick()">Add New User</button>
         </form>
-        <button class="btn btn-primary mx-2" (click)="onAddUserClick()" >Add New User</button>
     </nav>
 </header>
