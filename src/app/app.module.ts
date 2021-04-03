@@ -6,9 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
-import { RestaurantComponent } from './components/noodles/restaurant.component';
-import { RestaurantDetailComponent } from './components/noodles/restaurant-detail/restaurant-detail.component';
+import { RestaurantComponent } from './components/restaurant/restaurant.component';
+import { RestaurantDetailComponent } from './components/restaurant/restaurant-detail/restaurant-detail.component';
 import { RestaurantService } from "./services/restaurant.service";
+import { RestaurantsListComponent } from './components/restaurant/restaurants-list/restaurants-list.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { RestaurantService } from "./services/restaurant.service";
     HeaderComponent,
     FooterComponent,
     RestaurantComponent,
-    RestaurantDetailComponent
+    RestaurantDetailComponent,
+    RestaurantsListComponent
   ],
   imports: [
     BrowserModule,

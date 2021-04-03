@@ -1,0 +1,5 @@
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let restaurant of allRestaurants; let id = index">
+        <app-restaurant-detail [restaurant]="restaurant" [restaurantId]="id" ></app-restaurant-detail>
+    </li>
+</ul>
