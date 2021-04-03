@@ -14,7 +14,8 @@ export class RestaurantsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.restaurantService.fetchRestaurants();
-
+    this.restaurantService.fetchNoodleImages();
+    
     this.restaurantService.restaurantsChanged.subscribe((restaurants) => {
       this.allRestaurants = restaurants;
       console.log('>> in cmp', this.allRestaurants);

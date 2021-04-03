@@ -11,8 +11,10 @@ export class RestaurantService {
   readonly noodleImagesUrl = "https://s3-ap-southeast-1.amazonaws.com/he-public-data/noodlesec253ad.json"
 
   allRestaurants: Restaurant[] = [];
+  noodleImages:any = [];
+
   restaurantsChanged = new Subject<Restaurant[]>();
-  
+  noodleImagesChanged = new Subject<any[]>();
 
   constructor(private http:HttpClient) { }
 
@@ -21,6 +23,29 @@ export class RestaurantService {
       console.log('>> api',res);
       this.setRestaurants(res);
     })
+  }
+
+  fetchNoodleImages(){
+    this.http.get<any[]>(this.noodleImagesUrl).subscribe((images)=>{
+      console.log('>> images', images);
+      this.setNoodleImages(images);
+    })
+  }
+
+  setNoodleImages(images:any[]){
+    this.noodleImages = images;
+
+    this.noodleImagesChanged.next(this.noodleImages.slice());
+  }
+
+  getNoodleImages(){
+    return this.noodleImages.slice();
+  }
+
+  getNoodleImage(){
+    let image = this.noodleImages[Math.floor(Math.random() * this.noodleImages.length)];    
+
+    return image;
   }
 
   getRestaurants(){
