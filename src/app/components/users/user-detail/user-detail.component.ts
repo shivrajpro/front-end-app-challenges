@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'app-user-detail',
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserDetailComponent implements OnInit {
 
   @Input() userId: string;
   @Input() user: User;

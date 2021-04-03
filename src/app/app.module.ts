@@ -4,7 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserComponent } from './components/users/user/user.component';
+import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserEditComponent } from './components/users/user-edit/user-edit.component';
 import { UserService } from './services/user.service';
@@ -16,7 +16,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
+    UserDetailComponent,
     UsersComponent,
     UserEditComponent,
     UsersListComponent,
