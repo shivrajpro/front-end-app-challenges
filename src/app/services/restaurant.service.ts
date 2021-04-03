@@ -20,14 +20,14 @@ export class RestaurantService {
 
   fetchRestaurants(){
     this.http.get<Restaurant[]>(this.restaurantsUrl).subscribe((res)=>{
-      console.log('>> api',res);
+      // console.log('>> api',res);
       this.setRestaurants(res);
     })
   }
 
   fetchNoodleImages(){
     this.http.get<any[]>(this.noodleImagesUrl).subscribe((images)=>{
-      console.log('>> images', images);
+      // console.log('>> images', images);
       this.setNoodleImages(images);
     })
   }
@@ -50,6 +50,12 @@ export class RestaurantService {
 
   getRestaurants(){
     return this.allRestaurants.slice();
+  }
+
+  getRestaurant(restaurantId): Restaurant {
+    // console.log('>> service id',restaurantId, this.allRestaurants[restaurantId]);
+    
+    return this.allRestaurants[restaurantId];
   }
 
   setRestaurants(restaurants: Restaurant[]){

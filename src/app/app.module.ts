@@ -11,6 +11,7 @@ import { RestaurantDetailComponent } from './components/restaurant/restaurant-de
 import { RestaurantService } from "./services/restaurant.service";
 import { RestaurantsListComponent } from './components/restaurant/restaurants-list/restaurants-list.component';
 import { RestaurantItemComponent } from './components/restaurant/restaurants-list/restaurant-item/restaurant-item.component';
+import { NameFilterPipePipe } from './pipes/name-filter-pipe.pipe';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RestaurantItemComponent } from './components/restaurant/restaurants-lis
     RestaurantComponent,
     RestaurantDetailComponent,
     RestaurantsListComponent,
-    RestaurantItemComponent
+    RestaurantItemComponent,
+    NameFilterPipePipe
   ],
   imports: [
     BrowserModule,

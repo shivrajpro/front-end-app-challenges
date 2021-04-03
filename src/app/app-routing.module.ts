@@ -11,13 +11,11 @@ const routes: Routes = [
   },
   {
     path: 'restaurants',
-    component: RestaurantComponent,
-    children:[
-      {
-        path:':id',
-        component: RestaurantDetailComponent
-      }
-    ]
+    component: RestaurantComponent
+  },
+  {
+    path: 'restaurants/:id',
+    component: RestaurantDetailComponent
   }
 ];
 

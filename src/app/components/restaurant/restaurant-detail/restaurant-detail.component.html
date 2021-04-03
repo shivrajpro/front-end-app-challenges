@@ -1,4 +1,30 @@
-<p>
+<!-- <p>restaurant detail works</p> -->
+<!-- <p>
     {{restaurant.Brand}} | {{restaurant.Country}} | {{restaurant.Stars}}
     {{restaurant.Style}} | {{restaurant["Top Ten"]}} | {{restaurant.Variety}}
-</p>
+</p> -->
+<div *ngIf="restaurant" class="card">
+    <img loading="lazy" class="card-img-top" [src]="noodleImageURL"
+        alt="Card image"
+        >
+    <div class="card-body">
+        <h4 class="card-title font-weight-bold">{{restaurant.Brand}}</h4>
+
+
+        <p>
+            <span class="font-weight-bold">Country:</span> {{restaurant.Country}} &nbsp;&nbsp;
+            <span class="font-weight-bold">Style </span> : {{restaurant.Style == "Nan" ? "-": restaurant.Style}}
+        </p>
+
+        <p class="card-text font-weight-bold">Description:</p>
+        <p>{{restaurant.Variety}}</p>
+
+        <p class="px-2">
+            <span class="font-weight-bold text-left">Top Ten</span>: {{restaurant["Top Ten"]}} &nbsp;&nbsp;
+            <span class="font-weight-bold text-right">Rating</span>&nbsp;{{restaurant.Stars == "NaN" ? "-" : restaurant.Stars}}&nbsp;<i class="fa fa-star"
+                aria-hidden="true"></i>
+        </p>
+
+        <a href="#" class="btn btn-primary">Details</a>
+    </div>
+</div>
