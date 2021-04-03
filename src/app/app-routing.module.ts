@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NoodlesDetailComponent } from './components/noodles/noodles-detail/noodles-detail.component';
-import { NoodlesComponent } from './components/noodles/noodles.component';
+import { RestaurantDetailComponent } from './components/noodles/restaurant-detail/restaurant-detail.component';
+import { RestaurantComponent } from './components/noodles/restaurant.component';
 
 const routes: Routes = [
   {
@@ -11,11 +11,11 @@ const routes: Routes = [
   },
   {
     path: 'restaurants',
-    component: NoodlesComponent,
+    component: RestaurantComponent,
     children:[
       {
         path:':id',
-        component: NoodlesDetailComponent
+        component: RestaurantDetailComponent
       }
     ]
   }

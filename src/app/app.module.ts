@@ -6,9 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
-import { NoodlesComponent } from './components/noodles/noodles.component';
-import { NoodlesDetailComponent } from './components/noodles/noodles-detail/noodles-detail.component';
-import { NoodlesService } from "./services/noodles.service";
+import { RestaurantComponent } from './components/noodles/restaurant.component';
+import { RestaurantDetailComponent } from './components/noodles/restaurant-detail/restaurant-detail.component';
+import { RestaurantService } from "./services/restaurant.service";
 
 
 @NgModule({
@@ -16,8 +16,8 @@ import { NoodlesService } from "./services/noodles.service";
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    NoodlesComponent,
-    NoodlesDetailComponent
+    RestaurantComponent,
+    RestaurantDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +25,7 @@ import { NoodlesService } from "./services/noodles.service";
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [NoodlesService],
+  providers: [RestaurantService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

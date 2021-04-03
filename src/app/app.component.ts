@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NoodlesService } from './services/noodles.service';
+import { RestaurantService } from './services/restaurant.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,9 @@ import { NoodlesService } from './services/noodles.service';
 export class AppComponent implements OnInit {
   title = 'front-end-angular';
   
-  constructor(private noodlesService: NoodlesService){}
+  constructor(private noodlesService: RestaurantService){}
 
   ngOnInit(): void {
-    this.noodlesService.getRestaurants();
   }
 
 
