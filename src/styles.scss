@@ -7,19 +7,6 @@
     box-sizing: border-box;
 }
 
-html {
-    font-size: 62.5%;
-}
-
-
-@media (max-width:768px) {
-    html {
-        font-size: 55%;
-    }
-}
-
-@media (max-width:568px) {
-    html {
-        font-size: 30%;
-    }
+.body{
+    background-color: #F0F0F6;
 }
