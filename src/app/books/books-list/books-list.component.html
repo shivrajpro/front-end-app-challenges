@@ -13,14 +13,15 @@
         <form>
             <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid var(--igsBlue)': 'none'}">
                 <div class="input-group-btn">
-                    <button class="btn btn-default" (click)="onSearchQueryChange($event); isLoading=true"><i
+                    <button id="searchBtn" class="btn btn-default" (click)="onSearchQueryChange($event); isLoading=true"><i
                             class="fa fa-search"></i></button>
                 </div>
                 <input type="text" class="form-control" name="searchQuery" placeholder="Search"
                     [(ngModel)]="searchQuery" (focus)="searchInputFocused=true" (focusout)="searchInputFocused=false"
                     (ngModelChange)="onSearchQueryChange($event); isLoading=true" ngModel required>
                 <div *ngIf="searchQuery.length>0" class="input-group-btn">
-                    <button id="clearInputBtn" class="btn btn-default" (click)="searchQuery=''; onSearchQueryChange($event); isLoading=true"><i
+                    <button id="clearInputBtn" class="btn btn-default"
+                        (click)="searchQuery=''; onSearchQueryChange($event); isLoading=true"><i
                             class="fa fa-times"></i></button>
                 </div>
             </div>
@@ -39,7 +40,8 @@
             <ul>
                 <li *ngFor="let book of booksList" (click)="onBookCardClick(book)" class="book-card">
                     <p>
-                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" loading="lazy" alt="book-cover">
+                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" loading="lazy"
+                            alt="book-cover">
                     </p>
                     <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
                     <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>

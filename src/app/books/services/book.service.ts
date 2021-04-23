@@ -19,38 +19,50 @@ export class BookService {
 
   readonly baseUrl = "http://skunkworks.ignitesol.com:8000/books";
 
+  responseCache = new Map();
+
   booksList: any[];
   booksListChanged = new BehaviorSubject<object>({});
 
   constructor(private http: HttpClient) { }
 
   getBooksByTopic(topic: string) {
-    let topicUrl = `${this.baseUrl}?topic=${topic}`;
+    let topicUrl = `${this.baseUrl}?topic=${topic.toLowerCase()}`;
 
-    console.log(">> topicUrl=", topicUrl);
+    // console.log(">> topicUrl=", topicUrl);
+    // console.log(">> cache", this.responseCache);
+    
 
     if (env.mockMode) {
       this.booksListChanged.next(mockData.booksApiResponse);
+    } else if (this.responseCache.has(topicUrl)) {
+      console.log(">> SERVING CACHED RESPONSE");
+      this.booksListChanged.next(this.responseCache.get(topicUrl));
     } else {
       this.http.get<BooksApiResponse>(topicUrl).subscribe((response) => {
-        console.log(">> getBooksByTopic", response);
-
         this.booksListChanged.next(response);
+
+        this.responseCache.set(topicUrl, response);
       });
     }
   }
 
   getBooksByQuery(q: any) {
     let searchUrl = `${this.baseUrl}?topic=${q.topic}&search=${q.searchQuery}`
-    console.log(">> searchUrl", searchUrl);
+    // console.log(">> searchUrl", searchUrl);
+    console.log(">> cache", this.responseCache);
 
     if (env.mockMode) {
       this.booksListChanged.next(mockData.booksApiResponse);
-    } else {
+    } else if (this.responseCache.has(searchUrl)) {
+      console.log(">> SERVING CACHED RESPONSE");
+      this.booksListChanged.next(this.responseCache.get(searchUrl));
+    }
+    else {
       this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
-        console.log(">> getBooksByQuery", response);
-
         this.booksListChanged.next(response);
+        
+        this.responseCache.set(searchUrl, response);
 
       })
     }

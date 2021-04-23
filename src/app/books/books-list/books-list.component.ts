@@ -22,7 +22,7 @@ export class BooksListComponent implements OnInit {
 
   constructor(private bookService: BookService, private route: ActivatedRoute,
     private toastr: ToastrService) {
-    this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1500);
+    this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1000);
   }
 
   ngOnInit(): void {
@@ -112,6 +112,18 @@ export class BooksListComponent implements OnInit {
 
   onSearchQueryChange(evt) {
     if (this.searchQuery.length === 0) {
+      console.log(">> evt", evt.target.closest("button"));
+      let clickedBtn = evt.target.closest("button");
+      if (clickedBtn.id === "searchBtn") {
+        this.isLoading = false;
+
+        this.toastr.info("Please type a book name or author", "Information", {
+          timeOut: 2000,
+          positionClass: 'toast-top-center'
+        })
+
+        return;
+      }
 
       this.bookService.getBooksByTopic(this.genre);
     } else if (this.searchQuery.length > 0) {
