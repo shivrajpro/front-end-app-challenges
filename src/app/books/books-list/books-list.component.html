@@ -1,1 +1,21 @@
 <p>books-list works!</p>
+<div class="container">
+    <p>
+        <a routerLink="../" >
+            <img src="../../../assets/icons/Back.svg" alt="next" height="20" width="20">
+        </a>
+        {{genre}}
+    </p>
+
+    <form>
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" name="search">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
