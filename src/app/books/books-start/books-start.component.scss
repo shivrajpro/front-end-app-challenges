@@ -10,9 +10,15 @@
         // margin: 0 auto;
         // border: 1px solid black;
         padding: 10px;
-        
-        h1{
-            color: #5E56E7;
+                
+        p{
+            color     : var(--igsBlack);
+            font-weight: 500;
+            font-size: 30px;
+            &:first-child{
+                color: var(--igsBlue);
+                font-size: 48px;
+            }
         }
     }
     
@@ -38,10 +44,20 @@
             cursor: pointer;
             // box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
-            p:first-child{
+            p{
                 text-transform: uppercase;
-                font-weight: 400;
+                font-weight: 500;
                 letter-spacing: 1px;
+
+                img{
+                    height: 20px;
+                    width: 20px;
+                }
+            }
+
+            &:hover{
+                background: var(--igsBlue);
+                color: #fff;
             }
         }
     }

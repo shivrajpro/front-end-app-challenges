@@ -1,12 +1,16 @@
 .container {
 
-    p.list-heading {
-        color: #5E56E7;
+    .list-heading{
+
+        p {
+            color: var(--igsBlue);
+            font-size: 20px;
+            font-weight: 500;
+        }
     }
 
     .input-group {
         background   : #F0F0F6;
-        // border: 1px solid #5E56E7;
         padding      : 0 10px;
         max-height   : 40px;
         border-radius: 4px;
@@ -21,7 +25,8 @@
         
         input {
             background: #F0F0F6;
-            color     : #000;
+            color     : var(--igsBlack);
+            font-weight: 500;
             outline   : none;
             border    : none;
             
@@ -46,37 +51,40 @@
             li {
                 list-style-type: none;
 
-                div {
-                    width    : 130px;
-                    height: 225px;
-                    overflow: hidden;
-                    // border   : 1px solid red;
-                    padding: 4px;
-                    margin: 4px;
-                    cursor: pointer;
-                    transition: .3s all;
+                width    : 130px;
+                height: 225px;
+                overflow: hidden;
+                // border   : 1px solid red;
+                padding: 4px;
+                margin: 4px;
+                cursor: pointer;
+                transition: .3s all;
 
-                    &:hover{
-                        transform: scale(1.1);
-                    }
-
-                    img {
-                        height: 162px;
-                        width : 114px;
-                        border-radius: 8px;
-                    }
-    
-                    p {
-                        margin: 2px;
-                        font-size: 12px;
-                    }
-
-                    p.title{
-                        font-weight: bold;
-                        text-transform: uppercase;
-                    }
-    
+                &:hover{
+                    transform: scale(1.1);
                 }
+
+                img {
+                    height: 162px;
+                    width : 114px;
+                    border-radius: 8px;
+                }
+
+                p {
+                    margin: 2px;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+
+                p.title{
+                    text-transform: uppercase;
+                }
+
+                p.author{
+                    color:var(--igsDarkgray);
+                }
+
+
             }
 
         }

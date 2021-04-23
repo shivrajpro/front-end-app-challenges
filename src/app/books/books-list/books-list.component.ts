@@ -739,7 +739,7 @@ export class BooksListComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
 
-      if(params["genre"]){
+      if (params["genre"]) {
         this.genre = params["genre"];
         this.isLoading = true;
         // this.bookService.getBooksByTopic(this.genre);
@@ -750,9 +750,9 @@ export class BooksListComponent implements OnInit {
 
     this.booksList = this.apiResponse.results;
     this.isLoading = false;
-    this.bookService.booksListChanged.subscribe((response)=>{
+    this.bookService.booksListChanged.subscribe((response) => {
       // console.log(">> in cmp", response);
-      this.isLoading =  false;
+      this.isLoading = false;
       this.apiResponse = response;
       this.booksList = this.apiResponse.results;
     })
@@ -773,23 +773,49 @@ export class BooksListComponent implements OnInit {
 
   }
 
-  onBookSearch(f:NgForm){
-    console.log(">> form",f);
-    console.log(">> searchInputFocused",this.searchInputFocused);
-    
-    if(f.valid){
+  onBookSearch(f: NgForm) {
+    console.log(">> form", f);
+    console.log(">> searchInputFocused", this.searchInputFocused);
+
+    if (f.valid) {
       const queryParams = {
-        topic:this.genre,
+        topic: this.genre,
         searchQuery: f.value.searchQuery
       }
 
       this.bookService.getBooksByQuery(queryParams);
     }
-    
+
   }
 
-  onBookCardClick(b){
-    console.log('>> clicked book',b);
-    
+  onBookCardClick(b) {
+    // console.log('>> clicked book',b);
+    console.log(">>", b.formats);
+
+    let bookFormat = "";
+
+
+    for (const key in b.formats) {
+      if (key.indexOf("text/html") > -1) {
+        bookFormat = b.formats[key];
+        break;
+      } else if (key.indexOf("application/pdf") > -1) {
+        bookFormat = b.formats[key];
+        break;
+      } else if (key.indexOf("text/plain") > -1) {
+        bookFormat = b.formats[key];
+        break;
+      }
+    }
+
+    console.log(">> format", bookFormat);
+
+    window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes'");
+
+  }
+
+  openZipFile(url: string) {
+    console.log(">> open zip file", url);
+
   }
 }

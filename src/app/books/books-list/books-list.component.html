@@ -1,4 +1,4 @@
-<p>books-list works!</p>
+<!-- <p>books-list works!</p> -->
 <div class="container">
     <div class="list-heading">
         <p>
@@ -11,7 +11,7 @@
 
     <div>
         <form (ngSubmit)="onBookSearch(f)" #f="ngForm">
-            <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid #5E56E7': 'none'}">
+            <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid var(--igsBlue)': 'none'}">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </div>
@@ -37,14 +37,13 @@
         <ul *ngIf="!isLoading">
             <li *ngFor="let book of booksList"
             (click)="onBookCardClick(book)"
+            class="book-card"
             >
-                <div >
-                    <p>
-                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" alt="">
-                    </p>
-                    <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
-                    <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>
-                </div>
+            <p>
+                <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" alt="">
+            </p>
+            <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
+            <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>
             </li>
         </ul>
     </div>
