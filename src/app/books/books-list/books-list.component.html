@@ -26,7 +26,11 @@
     
     <div class="books-list">
         <!-- img, title and author -->
-        <ul>
+        <div *ngIf="isLoading" class="spinner-wrapper">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+        
+        <ul *ngIf="!isLoading">
             <li *ngFor="let book of booksList" >
                 <div>
                     <p>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-books-list',
@@ -10,12 +11,13 @@ export class BooksListComponent implements OnInit {
 
   genre: string;
   booksList: [];
-  data: any;
+  apiResponse: any;
+  isLoading: boolean = false;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private bookService: BookService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.data = {
+    this.apiResponse = {
       "count": 54857,
       "next": "http://skunkworks.ignitesol.com:8000/books/?page=2",
       "previous": null,
@@ -734,13 +736,24 @@ export class BooksListComponent implements OnInit {
     }
 
     this.route.params.subscribe((params: Params) => {
-      this.genre = params["genre"];
 
-      this.genre = this.genre[0].toUpperCase() + this.genre.substring(1);
+      if(params["genre"]){
+        this.genre = params["genre"];
+        this.isLoading = true;
+        this.bookService.getBooksByTopic(this.genre);
+        this.genre = this.genre[0].toUpperCase() + this.genre.substring(1);
+      }
+
     });
 
-    this.booksList = this.data.results;
-    console.log(">>", this.booksList);
+    this.booksList = this.apiResponse.results;
+    this.bookService.booksListChanged.subscribe((response)=>{
+      console.log(">> in cmp", response);
+      this.isLoading =  false;
+      this.apiResponse = response;
+      this.booksList = this.apiResponse.results;
+    })
+
 
   }
 
