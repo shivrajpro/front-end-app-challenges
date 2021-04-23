@@ -36,8 +36,8 @@
     <div class="books-list-container" *ngIf="!isLoading">
         <div class="books-list">
             <!-- img, title and author -->
-
-            <ul>
+            <h1 *ngIf="booksList.length === 0" >No books found!</h1>
+            <ul *ngIf="booksList.length > 0">
                 <li *ngFor="let book of booksList" (click)="onBookCardClick(book)" class="book-card">
                     <p>
                         <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" loading="lazy"

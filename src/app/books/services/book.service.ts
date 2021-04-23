@@ -4,6 +4,7 @@ import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
 import { Book } from '../models/book.model';
 import { mockData } from "../../configs/mock";
 import { environment as env } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 export interface BooksApiResponse {
   count: number;
@@ -21,10 +22,11 @@ export class BookService {
 
   responseCache = new Map();
 
-  booksList: any[];
+  api_error = new Subject<object>();
   booksListChanged = new BehaviorSubject<object>({});
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   getBooksByTopic(topic: string) {
     let topicUrl = `${this.baseUrl}?topic=${topic.toLowerCase()}`;
@@ -43,7 +45,11 @@ export class BookService {
         this.booksListChanged.next(response);
 
         this.responseCache.set(topicUrl, response);
-      });
+      },
+        (error) => {
+          this.api_error.next(error);
+        }
+      );
     }
   }
 
@@ -64,7 +70,11 @@ export class BookService {
 
         this.responseCache.set(searchUrl, response);
 
-      })
+      },
+        (error) => {
+          this.api_error.next(error);
+        }
+      )
     }
   }
 

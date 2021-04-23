@@ -47,6 +47,16 @@ export class BooksListComponent implements OnInit {
     })
 
 
+    this.bookService.api_error.subscribe((e) => {
+      console.log(">> e=", e);
+      this.booksList = [];
+      this.isLoading = false;
+      this.toastr.error("An unknown error occured!", "ERROR", {
+        timeOut: 1500,
+        positionClass: 'toast-top-center'
+      });
+    })
+
   }
 
   getDisplayTitleOfBook(title: string) {
@@ -106,7 +116,16 @@ export class BooksListComponent implements OnInit {
       this.apiResponse = response;
       this.booksList.push(...response.results);
       evt.target.innerHTML = 'Load More...';
-    })
+    },
+      (error) => {
+        this.isLoading = false;
+        this.toastr.error("An unknown error occured!", "ERROR", {
+          timeOut: 1500,
+          positionClass: 'toast-top-center'
+        });
+
+      }
+    )
 
   }
 
