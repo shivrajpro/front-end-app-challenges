@@ -1,35 +1,43 @@
 .container {
 
-    .list-heading{
+    .list-heading {
 
         p {
-            color: var(--igsBlue);
-            font-size: 20px;
+            color      : var(--igsBlue);
+            font-size  : 20px;
             font-weight: 500;
         }
     }
 
     .input-group {
-        background   : #F0F0F6;
+        background   : var(--igsMediumGray);
         padding      : 0 10px;
-        max-height   : 40px;
+        max-height   : 50px;
         border-radius: 4px;
 
 
         button {
-            &:focus, &:active{
-                outline: none;
+            i {
+                margin-top: 5px;
+                font-size : 1.3rem;
+                color     : var(--igsDarkgray);
+            }
+
+            &:focus,
+            &:active {
+                outline   : none;
                 box-shadow: none;
             }
         }
-        
+
         input {
-            background: #F0F0F6;
-            color     : var(--igsBlack);
+            background : var(--igsMediumGray);
+            color      : var(--igsBlack);
+            font-size  : 20px;
             font-weight: 500;
-            outline   : none;
-            border    : none;
-            
+            outline    : none;
+            border     : none;
+
             &:focus {
                 box-shadow: none;
             }
@@ -38,7 +46,7 @@
     }
 
     .books-list {
-        margin: 10px 0px;
+        margin           : 10px 0px;
         // padding       : 4px 4px;
 
         ul {
@@ -46,51 +54,64 @@
             display       : flex;
             flex-direction: row;
             flex-wrap     : wrap;
-            padding: 2px;
+            padding       : 2px;
 
-            li {
+            .book-card {
                 list-style-type: none;
 
-                width    : 130px;
-                height: 225px;
-                overflow: hidden;
+                width       : 130px;
+                height      : 225px;
+                overflow    : hidden;
                 // border   : 1px solid red;
-                padding: 4px;
-                margin: 4px;
-                cursor: pointer;
-                transition: .3s all;
+                padding     : 4px;
+                margin      : 4px;
+                cursor      : pointer;
+                transition  : .3s all;
 
-                &:hover{
+                &:hover {
                     transform: scale(1.1);
                 }
 
                 img {
-                    height: 162px;
-                    width : 114px;
+                    height       : 162px;
+                    width        : 114px;
                     border-radius: 8px;
                 }
 
                 p {
-                    margin: 2px;
-                    font-size: 12px;
+                    margin     : 2px;
+                    font-size  : 12px;
                     font-weight: bold;
                 }
 
-                p.title{
+                p.title {
                     text-transform: uppercase;
                 }
 
-                p.author{
-                    color:var(--igsDarkgray);
+                p.author {
+                    color: var(--igsDarkgray);
                 }
 
 
             }
 
+
         }
 
-        .spinner-wrapper{
-            text-align: center;
-        }
+    }
+    
+    .spinner-wrapper {
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .load-more {
+        // border: 1px solid red;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+        font-weight    : 500;
     }
 }

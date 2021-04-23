@@ -37,4 +37,8 @@ export class BookService {
 
     })
   }
+
+  getMoreBooks(url: string){
+      return this.http.get<any>(url);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BookService } from '../services/book.service';
@@ -11,6 +11,7 @@ import { BookService } from '../services/book.service';
 export class BooksListComponent implements OnInit {
 
   genre: string;
+  searchQuery: string = '';
   booksList: [];
   apiResponse: any;
   isLoading: boolean = false;
@@ -773,21 +774,6 @@ export class BooksListComponent implements OnInit {
 
   }
 
-  onBookSearch(f: NgForm) {
-    console.log(">> form", f);
-    console.log(">> searchInputFocused", this.searchInputFocused);
-
-    if (f.valid) {
-      const queryParams = {
-        topic: this.genre,
-        searchQuery: f.value.searchQuery
-      }
-
-      this.bookService.getBooksByQuery(queryParams);
-    }
-
-  }
-
   onBookCardClick(b) {
     // console.log('>> clicked book',b);
     console.log(">>", b.formats);
@@ -810,7 +796,7 @@ export class BooksListComponent implements OnInit {
 
     console.log(">> format", bookFormat);
 
-    window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes'");
+    window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes");
 
   }
 
@@ -818,4 +804,32 @@ export class BooksListComponent implements OnInit {
     console.log(">> open zip file", url);
 
   }
+
+  onLoadMoreClicked() {
+    console.log(">> load more", this.apiResponse.next);
+
+    this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response) => {
+      this.booksList.push(...response.results);
+    })
+
+  }
+
+  onSearchQueryChange(evt) {
+    if (evt.target &&
+      (evt.target.id === 'clearInputBtn' || evt.target.classList.contains('fa-times'))) {
+      this.searchQuery = '';
+      this.bookService.getBooksByTopic(this.genre);
+    } else if (this.searchQuery.length > 0) {
+      console.log('>> make an api call', this.searchQuery);
+      const queryParams = {
+        topic: this.genre,
+        searchQuery: this.searchQuery
+      }
+
+      this.bookService.getBooksByQuery(queryParams);
+    }
+
+
+  }
+
 }

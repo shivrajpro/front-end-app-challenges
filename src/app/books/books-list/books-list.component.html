@@ -2,7 +2,7 @@
 <div class="container">
     <div class="list-heading">
         <p>
-            <a routerLink="../" >
+            <a routerLink="../">
                 <img src="../../../assets/icons/Back.svg" alt="next" height="20" width="20">
             </a>
             {{genre}}
@@ -10,41 +10,48 @@
     </div>
 
     <div>
-        <form (ngSubmit)="onBookSearch(f)" #f="ngForm">
+        <form>
             <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid var(--igsBlue)': 'none'}">
                 <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-default" (click)="onSearchQueryChange($event)"><i
+                            class="fa fa-search"></i></button>
                 </div>
                 <input type="text" class="form-control" name="searchQuery" placeholder="Search"
-                #searchInput
-                (focus)="searchInputFocused=true"
-                (focusout)="searchInputFocused=false"
-                ngModel required >
-                <div *ngIf="searchInput.value.length>0" class="input-group-btn">
-                    <button class="btn btn-default" type="reset"><i class="fa fa-times"></i></button>
+                    [(ngModel)]="searchQuery" (focus)="searchInputFocused=true" (focusout)="searchInputFocused=false"
+                    (ngModelChange)="onSearchQueryChange($event)" ngModel required>
+                <div *ngIf="searchQuery.length>0" class="input-group-btn">
+                    <button id="clearInputBtn" class="btn btn-default" (click)="onSearchQueryChange($event)"><i
+                            class="fa fa-times"></i></button>
                 </div>
             </div>
         </form>
     </div>
 
-    
-    <div class="books-list">
-        <!-- img, title and author -->
-        <div *ngIf="isLoading" class="spinner-wrapper">
-            <app-loading-spinner></app-loading-spinner>
+
+    <div *ngIf="isLoading" class="spinner-wrapper">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <div class="books-list-container" *ngIf="!isLoading">
+        <div class="books-list">
+            <!-- img, title and author -->
+
+            <ul>
+                <li *ngFor="let book of booksList" (click)="onBookCardClick(book)" class="book-card">
+                    <p>
+                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" alt="">
+                    </p>
+                    <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
+                    <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>
+                </li>
+            </ul>
+
         </div>
 
-        <ul *ngIf="!isLoading">
-            <li *ngFor="let book of booksList"
-            (click)="onBookCardClick(book)"
-            class="book-card"
-            >
+        <div class="load-more" *ngIf="apiResponse.next">
             <p>
-                <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" alt="">
+                <button class="btn btn-primary" (click)="onLoadMoreClicked()">Load More...</button>
             </p>
-            <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
-            <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>
-            </li>
-        </ul>
+        </div>
     </div>
 </div>
