@@ -29,17 +29,8 @@ export class BooksListComponent implements OnInit {
       if (params["genre"]) {
         this.genre = params["genre"];
         this.isLoading = true;
-        
-        let booksData = this.bookService.getBooksByTopic(this.genre);
-
-        if(booksData){
-          console.log(">> booksdata",booksData);
-          this.apiResponse = booksData;
-          this.booksList = this.apiResponse.results;
-          this.isLoading = false;
-        }
-        
-        // this.bookService.getBooksByTopic(this.genre);
+                
+        this.bookService.getBooksByTopic(this.genre);
         this.genre = this.genre[0].toUpperCase() + this.genre.substring(1);
       }
 
@@ -49,7 +40,7 @@ export class BooksListComponent implements OnInit {
       console.log(">> in cmp", response);
       this.isLoading = false;
       this.apiResponse = response;
-      this.booksList = this.apiResponse.results;
+      this.booksList = this.apiResponse?.results;
     })
 
 

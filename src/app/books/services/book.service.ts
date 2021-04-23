@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
 import { Book } from '../models/book.model';
 import { mockData } from "../../configs/mock";
-import { environment } from 'src/environments/environment';
+import { environment as env } from 'src/environments/environment';
 
 export interface BooksApiResponse {
   count: number;
@@ -20,7 +20,7 @@ export class BookService {
   readonly baseUrl = "http://skunkworks.ignitesol.com:8000/books";
 
   booksList: any[];
-  booksListChanged = new Subject<object>();
+  booksListChanged = new BehaviorSubject<object>({});
 
   constructor(private http: HttpClient) { }
 
@@ -29,8 +29,8 @@ export class BookService {
 
     console.log(">> topicUrl=", topicUrl);
 
-    if (environment.mockMode) {
-      return mockData.booksApiResponse;
+    if (env.mockMode) {
+      this.booksListChanged.next(mockData.booksApiResponse);
     } else {
       this.http.get<BooksApiResponse>(topicUrl).subscribe((response) => {
         console.log(">> getBooksByTopic", response);
@@ -38,23 +38,34 @@ export class BookService {
         this.booksListChanged.next(response);
       });
     }
-
-    return null;
   }
 
   getBooksByQuery(q: any) {
     let searchUrl = `${this.baseUrl}?topic=${q.topic}&search=${q.searchQuery}`
     console.log(">> searchUrl", searchUrl);
 
-    this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
-      console.log(">> getBooksByQuery", response);
-
-      this.booksListChanged.next(response);
-
-    })
+    if(env.mockMode){
+      this.booksListChanged.next(mockData.booksApiResponse);
+    }else{
+      this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
+        console.log(">> getBooksByQuery", response);
+  
+        this.booksListChanged.next(response);
+  
+      })
+    }
   }
 
   getMoreBooks(url: string) {
+    // var moreBooksObs = new Observable();
+    if(env.mockMode){
+
+      const booksObsservable = new Observable((obs)=>{
+        obs.next(mockData.booksApiResponse);
+      });
+      return booksObsservable;
+      // this.booksListChanged.next(mockData.booksApiResponse);
+    }
     return this.http.get<any>(url);
   }
 }
