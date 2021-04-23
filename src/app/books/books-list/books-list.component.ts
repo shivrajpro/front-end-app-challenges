@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import * as _ from "lodash";
 import { ActivatedRoute, Params } from '@angular/router';
 import { BookService } from '../services/book.service';
 
@@ -17,7 +17,9 @@ export class BooksListComponent implements OnInit {
   isLoading: boolean = false;
   searchInputFocused: boolean = false;
 
-  constructor(private bookService: BookService, private route: ActivatedRoute) { }
+  constructor(private bookService: BookService, private route: ActivatedRoute) {
+    this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1500);
+  }
 
   ngOnInit(): void {
     this.apiResponse = {
@@ -815,9 +817,7 @@ export class BooksListComponent implements OnInit {
   }
 
   onSearchQueryChange(evt) {
-    if (evt.target &&
-      (evt.target.id === 'clearInputBtn' || evt.target.classList.contains('fa-times'))) {
-      this.searchQuery = '';
+    if (this.searchQuery.length === 0) {
       this.bookService.getBooksByTopic(this.genre);
     } else if (this.searchQuery.length > 0) {
       console.log('>> make an api call', this.searchQuery);
