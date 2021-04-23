@@ -1,6 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
+import { Book } from '../models/book.model';
+import { mockData } from "../../configs/mock";
+import { environment } from 'src/environments/environment';
+
+export interface BooksApiResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: Book[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +20,7 @@ export class BookService {
   readonly baseUrl = "http://skunkworks.ignitesol.com:8000/books";
 
   booksList: any[];
-  booksListChanged = new Subject<Object>();
+  booksListChanged = new Subject<object>();
 
   constructor(private http: HttpClient) { }
 
@@ -19,18 +29,24 @@ export class BookService {
 
     console.log(">> topicUrl=", topicUrl);
 
-    this.http.get(topicUrl).subscribe((response) => {
-      console.log(">> getBooksByTopic", response);
+    if (environment.mockMode) {
+      return mockData.booksApiResponse;
+    } else {
+      this.http.get<BooksApiResponse>(topicUrl).subscribe((response) => {
+        console.log(">> getBooksByTopic", response);
 
-      this.booksListChanged.next(response);
-    });
+        this.booksListChanged.next(response);
+      });
+    }
+
+    return null;
   }
 
-  getBooksByQuery(q: any){
+  getBooksByQuery(q: any) {
     let searchUrl = `${this.baseUrl}?topic=${q.topic}&search=${q.searchQuery}`
     console.log(">> searchUrl", searchUrl);
-    
-    this.http.get(searchUrl).subscribe((response)=>{
+
+    this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
       console.log(">> getBooksByQuery", response);
 
       this.booksListChanged.next(response);
@@ -38,7 +54,7 @@ export class BookService {
     })
   }
 
-  getMoreBooks(url: string){
-      return this.http.get<any>(url);
+  getMoreBooks(url: string) {
+    return this.http.get<any>(url);
   }
 }

@@ -39,7 +39,7 @@
             <ul>
                 <li *ngFor="let book of booksList" (click)="onBookCardClick(book)" class="book-card">
                     <p>
-                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" alt="">
+                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" loading="lazy" alt="book-cover">
                     </p>
                     <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
                     <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>
@@ -50,7 +50,7 @@
 
         <div class="load-more" *ngIf="apiResponse.next">
             <p>
-                <button class="btn btn-primary" (click)="onLoadMoreClicked()">Load More...</button>
+                <button class="btn btn-primary" (click)="onLoadMoreClicked($event)">Load More...</button>
             </p>
         </div>
     </div>
