@@ -40,7 +40,7 @@ export class BooksListComponent implements OnInit {
     });
 
     this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
-      console.log(">> in cmp", response.results);
+      // console.log(">> in cmp", response.results);
       this.isLoading = !response.results;
       this.apiResponse = response;
       this.booksList = this.apiResponse?.results;
@@ -48,7 +48,7 @@ export class BooksListComponent implements OnInit {
 
 
     this.bookService.api_error.subscribe((e) => {
-      console.log(">> e=", e);
+      // console.log(">> e=", e);
       this.booksList = [];
       this.isLoading = false;
       this.toastr.error("An unknown error occured!", "ERROR", {
@@ -105,12 +105,12 @@ export class BooksListComponent implements OnInit {
   }
 
   openZipFile(url: string) {
-    console.log(">> open zip file", url);
+    // console.log(">> open zip file", url);
   }
 
   onLoadMoreClicked(evt) {
     evt.target.innerHTML = 'Loading...';
-    console.log(">> load more", this.apiResponse.next);
+    // console.log(">> load more", this.apiResponse.next);
 
     this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response: BooksApiResponse) => {
       this.apiResponse = response;
@@ -131,12 +131,12 @@ export class BooksListComponent implements OnInit {
 
   onSearchQueryChange(evt) {
     if (this.searchQuery.length === 0) {
-      console.log(">> evt", evt.target.closest("button"));
+      // console.log(">> evt", evt.target.closest("button"));
       let clickedBtn = evt.target.closest("button");
       if (clickedBtn.id === "searchBtn") {
         this.isLoading = false;
 
-        this.toastr.info("Please type a book name or author", "Information", {
+        this.toastr.info("Please type a name of book or author", "Information", {
           timeOut: 2000,
           positionClass: 'toast-top-center'
         })
@@ -146,7 +146,7 @@ export class BooksListComponent implements OnInit {
 
       this.bookService.getBooksByTopic(this.genre);
     } else if (this.searchQuery.length > 0) {
-      console.log('>> make an api call', this.searchQuery);
+      // console.log('>> make an api call', this.searchQuery);
       const queryParams = {
         topic: this.genre,
         searchQuery: this.searchQuery

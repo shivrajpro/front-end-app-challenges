@@ -14,7 +14,8 @@
             <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid var(--igsBlue)': 'none'}">
                 <div class="input-group-btn">
                     <button id="searchBtn" class="btn btn-default"
-                        (click)="onSearchQueryChange($event); isLoading=true"><i class="fa fa-search"></i></button>
+                        (click)="onSearchQueryChange($event); isLoading = searchQuery.length>0"><i
+                            class="fa fa-search"></i></button>
                 </div>
                 <input type="text" class="form-control" name="searchQuery" placeholder="Search"
                     [(ngModel)]="searchQuery" (focus)="searchInputFocused=true" (focusout)="searchInputFocused=false"
@@ -36,7 +37,7 @@
     <div class="books-list-container" *ngIf="!isLoading">
         <div class="books-list">
             <!-- img, title and author -->
-            <h1 *ngIf="booksList.length === 0" >No books found!</h1>
+            <h1 *ngIf="booksList.length === 0">No books found!</h1>
             <ul *ngIf="booksList.length > 0">
                 <li *ngFor="let book of booksList" (click)="onBookCardClick(book)" class="book-card">
                     <p>

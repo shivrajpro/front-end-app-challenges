@@ -56,7 +56,7 @@ export class BookService {
   getBooksByQuery(q: any) {
     let searchUrl = `${this.baseUrl}?topic=${q.topic}&search=${q.searchQuery}`
     // console.log(">> searchUrl", searchUrl);
-    console.log(">> cache", this.responseCache);
+    // console.log(">> cache", this.responseCache);
 
     if (env.mockMode) {
       this.booksListChanged.next(mockData.booksApiResponse);

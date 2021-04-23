@@ -18,7 +18,7 @@ export class BooksStartComponent implements OnInit {
   onGenreCardClick(evt) {
     let dataset = evt.target.closest("div").dataset;
 
-    console.log(dataset.genre);
+    // console.log(dataset.genre);
 
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/books/${dataset.genre}`])
