@@ -14,6 +14,7 @@ export class BooksListComponent implements OnInit {
   booksList: [];
   apiResponse: any;
   isLoading: boolean = false;
+  searchInputFocused: boolean = false;
 
   constructor(private bookService: BookService, private route: ActivatedRoute) { }
 
@@ -741,13 +742,14 @@ export class BooksListComponent implements OnInit {
       if(params["genre"]){
         this.genre = params["genre"];
         this.isLoading = true;
-        this.bookService.getBooksByTopic(this.genre);
+        // this.bookService.getBooksByTopic(this.genre);
         this.genre = this.genre[0].toUpperCase() + this.genre.substring(1);
       }
 
     });
 
     this.booksList = this.apiResponse.results;
+    this.isLoading = false;
     this.bookService.booksListChanged.subscribe((response)=>{
       // console.log(">> in cmp", response);
       this.isLoading =  false;
@@ -772,7 +774,9 @@ export class BooksListComponent implements OnInit {
   }
 
   onBookSearch(f:NgForm){
-    // console.log(">> form",f);
+    console.log(">> form",f);
+    console.log(">> searchInputFocused",this.searchInputFocused);
+    
     if(f.valid){
       const queryParams = {
         topic:this.genre,
@@ -781,6 +785,11 @@ export class BooksListComponent implements OnInit {
 
       this.bookService.getBooksByQuery(queryParams);
     }
+    
+  }
+
+  onBookCardClick(b){
+    console.log('>> clicked book',b);
     
   }
 }

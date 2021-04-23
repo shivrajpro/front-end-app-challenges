@@ -11,12 +11,16 @@
 
     <div>
         <form (ngSubmit)="onBookSearch(f)" #f="ngForm">
-            <div class="input-group">
+            <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid #5E56E7': 'none'}">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </div>
-                <input type="text" class="form-control" name="searchQuery" placeholder="Search" ngModel required >
-                <div class="input-group-btn">
+                <input type="text" class="form-control" name="searchQuery" placeholder="Search"
+                #searchInput
+                (focus)="searchInputFocused=true"
+                (focusout)="searchInputFocused=false"
+                ngModel required >
+                <div *ngIf="searchInput.value.length>0" class="input-group-btn">
                     <button class="btn btn-default" type="reset"><i class="fa fa-times"></i></button>
                 </div>
             </div>
@@ -31,8 +35,10 @@
         </div>
 
         <ul *ngIf="!isLoading">
-            <li *ngFor="let book of booksList" >
-                <div>
+            <li *ngFor="let book of booksList"
+            (click)="onBookCardClick(book)"
+            >
+                <div >
                     <p>
                         <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" alt="">
                     </p>
