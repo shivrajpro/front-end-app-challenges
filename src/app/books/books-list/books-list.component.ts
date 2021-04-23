@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _ from "lodash";
 import { ActivatedRoute, Params } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 import { BooksApiResponse, BookService } from '../services/book.service';
 import { Book } from '../models/book.model';
 
@@ -18,7 +20,8 @@ export class BooksListComponent implements OnInit {
   isLoading: boolean = false;
   searchInputFocused: boolean = false;
 
-  constructor(private bookService: BookService, private route: ActivatedRoute) {
+  constructor(private bookService: BookService, private route: ActivatedRoute,
+    private toastr: ToastrService) {
     this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1500);
   }
 
@@ -29,7 +32,7 @@ export class BooksListComponent implements OnInit {
       if (params["genre"]) {
         this.genre = params["genre"];
         this.isLoading = true;
-                
+
         this.bookService.getBooksByTopic(this.genre);
         this.genre = this.genre[0].toUpperCase() + this.genre.substring(1);
       }
@@ -37,8 +40,8 @@ export class BooksListComponent implements OnInit {
     });
 
     this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
-      console.log(">> in cmp", response);
-      this.isLoading = false;
+      console.log(">> in cmp", response.results);
+      this.isLoading = !response.results;
       this.apiResponse = response;
       this.booksList = this.apiResponse?.results;
     })
@@ -60,11 +63,8 @@ export class BooksListComponent implements OnInit {
   }
 
   onBookCardClick(b) {
-    // console.log('>> clicked book',b);
-    console.log(">>", b.formats);
 
     let bookFormat = "";
-
 
     for (const key in b.formats) {
       if (key.indexOf("text/html") > -1) {
@@ -79,21 +79,29 @@ export class BooksListComponent implements OnInit {
       }
     }
 
-    console.log(">> format", bookFormat);
+    // bookFormat = ''; uncomment this line to see the error msg to work
+    if (bookFormat.length === 0) {
+      // toastr
+      this.toastr.error("No viewable version available", "ERROR", {
+        timeOut: 1500,
+        positionClass: 'toast-top-center'
+      });
 
-    window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes");
+    } else {
+      window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes");
+    }
+
 
   }
 
   openZipFile(url: string) {
     console.log(">> open zip file", url);
-
   }
 
   onLoadMoreClicked(evt) {
     evt.target.innerHTML = 'Loading...';
     console.log(">> load more", this.apiResponse.next);
-    
+
     this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response: BooksApiResponse) => {
       this.apiResponse = response;
       this.booksList.push(...response.results);

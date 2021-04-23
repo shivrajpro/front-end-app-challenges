@@ -44,27 +44,26 @@ export class BookService {
     let searchUrl = `${this.baseUrl}?topic=${q.topic}&search=${q.searchQuery}`
     console.log(">> searchUrl", searchUrl);
 
-    if(env.mockMode){
+    if (env.mockMode) {
       this.booksListChanged.next(mockData.booksApiResponse);
-    }else{
+    } else {
       this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
         console.log(">> getBooksByQuery", response);
-  
+
         this.booksListChanged.next(response);
-  
+
       })
     }
   }
 
   getMoreBooks(url: string) {
-    // var moreBooksObs = new Observable();
-    if(env.mockMode){
+    if (env.mockMode) {
 
-      const booksObsservable = new Observable((obs)=>{
+      var booksObsservable = new Observable((obs) => {
         obs.next(mockData.booksApiResponse);
       });
+
       return booksObsservable;
-      // this.booksListChanged.next(mockData.booksApiResponse);
     }
     return this.http.get<any>(url);
   }
