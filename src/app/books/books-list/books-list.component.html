@@ -10,14 +10,14 @@
     </div>
 
     <div>
-        <form>
+        <form (ngSubmit)="onBookSearch(f)" #f="ngForm">
             <div class="input-group">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </div>
-                <input type="text" class="form-control" placeholder="Search" name="search">
+                <input type="text" class="form-control" name="searchQuery" placeholder="Search" ngModel required >
                 <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-default" type="reset"><i class="fa fa-times"></i></button>
                 </div>
             </div>
         </form>
@@ -29,7 +29,7 @@
         <div *ngIf="isLoading" class="spinner-wrapper">
             <app-loading-spinner></app-loading-spinner>
         </div>
-        
+
         <ul *ngIf="!isLoading">
             <li *ngFor="let book of booksList" >
                 <div>

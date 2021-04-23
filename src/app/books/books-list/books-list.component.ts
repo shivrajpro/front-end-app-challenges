@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BookService } from '../services/book.service';
 
@@ -748,7 +749,7 @@ export class BooksListComponent implements OnInit {
 
     this.booksList = this.apiResponse.results;
     this.bookService.booksListChanged.subscribe((response)=>{
-      console.log(">> in cmp", response);
+      // console.log(">> in cmp", response);
       this.isLoading =  false;
       this.apiResponse = response;
       this.booksList = this.apiResponse.results;
@@ -770,4 +771,16 @@ export class BooksListComponent implements OnInit {
 
   }
 
+  onBookSearch(f:NgForm){
+    // console.log(">> form",f);
+    if(f.valid){
+      const queryParams = {
+        topic:this.genre,
+        searchQuery: f.value.searchQuery
+      }
+
+      this.bookService.getBooksByQuery(queryParams);
+    }
+    
+  }
 }

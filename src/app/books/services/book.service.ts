@@ -17,12 +17,24 @@ export class BookService {
   getBooksByTopic(topic: string) {
     let topicUrl = `${this.baseUrl}?topic=${topic}`;
 
-    console.log(">> url=", topicUrl);
+    console.log(">> topicUrl=", topicUrl);
 
     this.http.get(topicUrl).subscribe((response) => {
-      console.log(">> response", response);
+      console.log(">> getBooksByTopic", response);
 
       this.booksListChanged.next(response);
     });
+  }
+
+  getBooksByQuery(q: any){
+    let searchUrl = `${this.baseUrl}?topic=${q.topic}&search=${q.searchQuery}`
+    console.log(">> searchUrl", searchUrl);
+    
+    this.http.get(searchUrl).subscribe((response)=>{
+      console.log(">> getBooksByQuery", response);
+
+      this.booksListChanged.next(response);
+
+    })
   }
 }
