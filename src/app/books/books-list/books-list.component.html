@@ -13,8 +13,8 @@
         <form>
             <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid var(--igsBlue)': 'none'}">
                 <div class="input-group-btn">
-                    <button id="searchBtn" class="btn btn-default" (click)="onSearchQueryChange($event); isLoading=true"><i
-                            class="fa fa-search"></i></button>
+                    <button id="searchBtn" class="btn btn-default"
+                        (click)="onSearchQueryChange($event); isLoading=true"><i class="fa fa-search"></i></button>
                 </div>
                 <input type="text" class="form-control" name="searchQuery" placeholder="Search"
                     [(ngModel)]="searchQuery" (focus)="searchInputFocused=true" (focusout)="searchInputFocused=false"

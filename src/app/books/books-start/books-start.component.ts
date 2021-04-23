@@ -8,23 +8,23 @@ import { Router } from '@angular/router';
 })
 export class BooksStartComponent implements OnInit {
 
-  constructor(private router: Router){
+  constructor(private router: Router) {
 
   }
 
   ngOnInit(): void {
   }
 
-  onGenreCardClick(evt){
+  onGenreCardClick(evt) {
     let dataset = evt.target.closest("div").dataset;
 
     console.log(dataset.genre);
 
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/books/${dataset.genre}`])
-      );
-      
+    );
+
     console.log('>> url', url);
-    window.open(url, '_blank');    
+    window.open(url, '_blank');
   }
 }

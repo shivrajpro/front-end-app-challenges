@@ -1,5 +1,5 @@
 export const mockData = {
-    booksApiResponse:{
+    booksApiResponse: {
         "count": 54857,
         "next": "http://skunkworks.ignitesol.com:8000/books/?page=2",
         "previous": null,

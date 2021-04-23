@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(private router: Router){
+  constructor() {
 
-  }
-
-  onGenreCardClick(evt){
-    let dataset = evt.target.closest("div").dataset;
-
-    console.log(dataset.genre);
-
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/books/${dataset.genre}`])
-      );
-      
-    console.log('>> url', url);
-    window.open(url, '_blank');    
   }
 }

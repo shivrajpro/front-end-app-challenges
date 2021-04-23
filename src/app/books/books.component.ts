@@ -6,27 +6,14 @@ import { BookService } from './services/book.service';
   selector: 'app-books',
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
-  providers:[BookService]
+  providers: [BookService]
 })
 export class BooksComponent implements OnInit {
 
-  constructor(private router: Router){
+  constructor() {
 
   }
 
   ngOnInit(): void {
-  }
-
-  onGenreCardClick(evt){
-    let dataset = evt.target.closest("div").dataset;
-
-    console.log(dataset.genre);
-
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/books/${dataset.genre}`])
-      );
-      
-    console.log('>> url', url);
-    window.open(url, '_blank');    
   }
 }

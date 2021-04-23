@@ -1,6 +1,7 @@
 .container {
 
     margin-top: 20px;
+
     // border: 1px solid red;
     .list-heading {
 
@@ -101,12 +102,12 @@
         }
 
     }
-    
+
     .spinner-wrapper {
-        height: 500px;
-        display: flex;
+        height         : 500px;
+        display        : flex;
         justify-content: center;
-        align-items: center;
+        align-items    : center;
     }
 
     .load-more {

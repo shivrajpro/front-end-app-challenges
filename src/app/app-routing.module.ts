@@ -15,7 +15,7 @@ const routes: Routes = [
     component: BooksComponent,
     children: [
       {
-        path:'',
+        path: '',
         component: BooksStartComponent
       },
       {

@@ -1,63 +1,64 @@
-.container{
+.container {
     // border: 1px solid red;
     // padding: 10px;
-    
-    .row{
+
+    .row {
         padding: 10px;
     }
-    
-    .heading{
+
+    .heading {
         // margin: 0 auto;
         // border: 1px solid black;
         padding: 10px;
-                
-        p{
-            color     : var(--igsBlack);
+
+        p {
+            color      : var(--igsBlack);
             font-weight: 500;
-            font-size: 30px;
-            &:first-child{
-                color: var(--igsBlue);
+            font-size  : 30px;
+
+            &:first-child {
+                color    : var(--igsBlue);
                 font-size: 48px;
             }
         }
     }
-    
-    .cards-list{
+
+    .cards-list {
         // margin: 0 auto;
         // border: 1px solid black;
-        display: flex;
+        display  : flex;
         flex-wrap: wrap;
 
-        .card{
+        .card {
             // border: 1px solid green;
             background-color: white;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 10px;
-            height: 50px;
-            width: 400px;
-            border-radius: 4px;
-            font-size: 20px;
-            margin: 10px 20px;
-            box-shadow: 0 2px 5px 0 rgba(211, 209, 238, 0.5);
-            cursor: pointer;
+            display         : flex;
+            flex-direction  : row;
+            justify-content : space-between;
+            padding         : 10px;
+            height          : 50px;
+            width           : 400px;
+            border-radius   : 4px;
+            font-size       : 20px;
+            margin          : 10px 20px;
+            box-shadow      : 0 2px 5px 0 rgba(211, 209, 238, 0.5);
+            cursor          : pointer;
             // box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
-            p{
+            p {
                 text-transform: uppercase;
-                font-weight: 500;
+                font-weight   : 500;
                 letter-spacing: 1px;
 
-                img{
+                img {
                     height: 20px;
-                    width: 20px;
+                    width : 20px;
                 }
             }
 
-            &:hover{
+            &:hover {
                 background: var(--igsBlue);
-                color: #fff;
+                color     : #fff;
             }
         }
     }

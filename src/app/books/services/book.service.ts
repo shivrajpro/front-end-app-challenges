@@ -31,7 +31,7 @@ export class BookService {
 
     // console.log(">> topicUrl=", topicUrl);
     // console.log(">> cache", this.responseCache);
-    
+
 
     if (env.mockMode) {
       this.booksListChanged.next(mockData.booksApiResponse);
@@ -61,7 +61,7 @@ export class BookService {
     else {
       this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
         this.booksListChanged.next(response);
-        
+
         this.responseCache.set(searchUrl, response);
 
       })
