@@ -39,10 +39,9 @@
             <!-- img, title and author -->
             <h1 *ngIf="booksList.length === 0">No books found!</h1>
             <ul *ngIf="booksList.length > 0">
-                <li *ngFor="let book of booksList" (click)="onBookCardClick(book)" class="book-card">
+                <li *ngFor="let book of booksList; let i=index" (click)="onBookCardClick(book)" class="book-card">
                     <p>
-                        <img src="https://www.gutenberg.org/cache/epub/61207/pg61207.cover.medium.jpg" loading="lazy"
-                            alt="book-cover">
+                        <img src="{{getImageUrl(i)}}" loading="lazy" alt="book-cover">
                     </p>
                     <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
                     <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>

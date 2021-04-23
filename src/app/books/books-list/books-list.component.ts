@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { BooksApiResponse, BookService } from '../services/book.service';
 import { Book } from '../models/book.model';
+import { mockData } from "../../configs/mock";
 
 @Component({
   selector: 'app-books-list',
@@ -158,4 +159,9 @@ export class BooksListComponent implements OnInit {
 
   }
 
+  getImageUrl(i) {
+    let randomImg = mockData.bookCovers[i % mockData.bookCovers.length]
+    
+    return randomImg.url;
+  }
 }
