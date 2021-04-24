@@ -1,5 +1,6 @@
 <!-- <p>books-list works!</p> -->
-<div class="container">
+<div class="books-list-top">
+
     <div class="list-heading">
         <p>
             <a routerLink="../">
@@ -8,8 +9,7 @@
             {{genre}}
         </p>
     </div>
-
-    <div>
+    <div class="search-book">
         <form>
             <div class="input-group" [ngStyle]="{'border': searchInputFocused ? '1px solid var(--igsBlue)': 'none'}">
                 <div class="input-group-btn">
@@ -28,7 +28,9 @@
             </div>
         </form>
     </div>
+</div>
 
+<div class="container">
 
     <div *ngIf="isLoading" class="spinner-wrapper">
         <app-loading-spinner></app-loading-spinner>
@@ -36,15 +38,15 @@
 
     <div class="books-list-container" *ngIf="!isLoading">
         <div class="books-list">
-            <!-- img, title and author -->
             <h1 *ngIf="booksList.length === 0">No books found!</h1>
             <ul *ngIf="booksList.length > 0">
+                <!-- img, title and author -->
                 <li *ngFor="let book of booksList; let i=index" (click)="onBookCardClick(book)" class="book-card">
                     <p>
                         <img src="{{getImageUrl(i)}}" loading="lazy" alt="book-cover">
                     </p>
                     <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
-                    <p class="author"> {{getDisplayNameOfAuthor(book.authors[0]?.name)}}</p>
+                    <p class="author"> {{getDisplayNameOfAuthor(book.authors)}}</p>
                 </li>
             </ul>
 

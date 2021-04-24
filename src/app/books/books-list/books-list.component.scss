@@ -1,38 +1,39 @@
-.container {
-
-    margin-top: 20px;
-
+.books-list-top{
+    background: #fff;
+    padding-bottom: 10px;
+    margin: 8px 2px;
     // border: 1px solid red;
-    .list-heading {
-
+    .list-heading, .search-book {
+        margin: 0 auto;
+        width: 90%;
         p {
             color      : var(--igsBlue);
             font-size  : 20px;
             font-weight: 500;
         }
     }
-
+    
     .input-group {
         background   : var(--igsMediumGray);
         padding      : 0 10px;
         max-height   : 50px;
         border-radius: 4px;
-
-
+    
+    
         button {
             i {
                 margin-top: 5px;
                 font-size : 1.3rem;
                 color     : var(--igsDarkgray);
             }
-
+    
             &:focus,
             &:active {
                 outline   : none;
                 box-shadow: none;
             }
         }
-
+    
         input {
             background : var(--igsMediumGray);
             color      : var(--igsBlack);
@@ -40,17 +41,23 @@
             font-weight: 500;
             outline    : none;
             border     : none;
-
+    
             &:focus {
                 box-shadow: none;
             }
         }
-
+    
     }
+}
+
+.container {
+
+    margin-top: 20px;
+    // border: 1px solid red;
+    padding: 0;
 
     .books-list {
         margin           : 10px 0px;
-        // padding       : 4px 4px;
 
         ul {
             // border        : 1px solid black;

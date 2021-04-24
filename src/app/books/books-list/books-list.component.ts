@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BooksApiResponse, BookService } from '../services/book.service';
 import { Book } from '../models/book.model';
 import { mockData } from "../../configs/mock";
+import { Author } from '../models/author.model';
 
 @Component({
   selector: 'app-books-list',
@@ -66,11 +67,16 @@ export class BooksListComponent implements OnInit {
     return title;
   }
 
-  getDisplayNameOfAuthor(authorName: string) {
-    if (authorName && authorName.length > 20)
-      return authorName.substr(0, 20) + "...";
-    return authorName;
+  getDisplayNameOfAuthor(authors: Author[]) {
+    let dispName = "";
 
+    if (authors.length > 0) {
+      let authorNames = _.map(authors, 'name');
+      dispName = authorNames.join();
+      if (dispName.length > 22)
+        dispName = dispName.substr(0, 20) + "...";
+    }
+    return dispName;
   }
 
   onBookCardClick(b) {
@@ -133,16 +139,18 @@ export class BooksListComponent implements OnInit {
   onSearchQueryChange(evt) {
     if (this.searchQuery.length === 0) {
       // console.log(">> evt", evt.target.closest("button"));
-      let clickedBtn = evt.target.closest("button");
-      if (clickedBtn.id === "searchBtn") {
-        this.isLoading = false;
+      if (evt.target && evt.target.closest("button")) {
+        let clickedBtn = evt.target.closest("button");
+        if (clickedBtn.id === "searchBtn") {
+          this.isLoading = false;
 
-        this.toastr.info("Please type a name of book or author", "Information", {
-          timeOut: 2000,
-          positionClass: 'toast-top-center'
-        })
+          this.toastr.info("Please type a name of book or author", "Information", {
+            timeOut: 2000,
+            positionClass: 'toast-top-center'
+          })
 
-        return;
+          return;
+        }
       }
 
       this.bookService.getBooksByTopic(this.genre);
@@ -161,7 +169,7 @@ export class BooksListComponent implements OnInit {
 
   getImageUrl(i) {
     let randomImg = mockData.bookCovers[i % mockData.bookCovers.length]
-    
+
     return randomImg.url;
   }
 }
