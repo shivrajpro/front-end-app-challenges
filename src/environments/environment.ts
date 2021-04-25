@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  mockMode: true // set this to true to work with mock data
+  mockMode: false // set this to true to work with mock data
 };
 
 /*

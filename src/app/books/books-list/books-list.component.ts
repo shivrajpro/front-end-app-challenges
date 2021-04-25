@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as _ from "lodash";
+import $ from "jquery";
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,20 +14,27 @@ import { Author } from '../models/author.model';
   templateUrl: './books-list.component.html',
   styleUrls: ['./books-list.component.scss']
 })
-export class BooksListComponent implements OnInit {
+export class BooksListComponent implements OnInit, OnDestroy {
 
-  genre: string;
+  genre: string = '';
   searchQuery: string = '';
   booksList: Book[] = [];
   apiResponse: BooksApiResponse;
   isLoading: boolean = false;
   searchInputFocused: boolean = false;
+  windowScrollListener;
 
   constructor(private bookService: BookService, private route: ActivatedRoute,
     private toastr: ToastrService) {
     this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1000);
 
-    window.addEventListener('scroll', _.throttle( this.bookListScroll, 300));
+    this.bookListScroll = _.debounce(this.bookListScroll, 500);
+
+    this.windowScrollListener = () => {
+      this.bookListScroll();
+    }
+
+    window.addEventListener('scroll', this.windowScrollListener);
   }
 
   ngOnInit(): void {
@@ -46,14 +54,15 @@ export class BooksListComponent implements OnInit {
     this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
       // console.log(">> in cmp", response.results);
       this.isLoading = !response.results;
-      this.apiResponse = response;
-      this.booksList = this.apiResponse?.results;
-    })
 
+      if(response.results){
+        this.apiResponse = response;
+        this.booksList = this.bookService.booksList.slice();
+      }
+    })
 
     this.bookService.api_error.subscribe((e) => {
       // console.log(">> e=", e);
-      this.booksList = [];
       this.isLoading = false;
       this.toastr.error("An unknown error occured!", "ERROR", {
         timeOut: 1500,
@@ -63,10 +72,15 @@ export class BooksListComponent implements OnInit {
 
   }
 
-  bookListScroll = function () {
-    console.log('>> scroll');
-    
+  bookListScroll() {
+    // console.log('>> scroll', this.booksList);
+
+    let pixelsFromWindowBottomToBottom = 0 + $(document).height() - $(window).scrollTop() - $(window).height();
+
+    if (pixelsFromWindowBottomToBottom < 100 && this.apiResponse.next)
+      this.loadMoreBooks();
   }
+
   getDisplayTitleOfBook(title: string) {
     if (title.length > 22)
       return title.substr(0, 22) + "...";
@@ -89,35 +103,34 @@ export class BooksListComponent implements OnInit {
     let bookFormat = "";
 
     let dataset = evt.target.closest("li").dataset;
-    let clickedBook = _.find(this.booksList, ['id', +dataset.bookid])
+    if (dataset && dataset.bookid) {
+      let clickedBook = _.find(this.booksList, ['id', +dataset.bookid])
 
-    // console.log(">> clickedBook", dataset.bookid, clickedBook);
+      // console.log(">> clickedBook", dataset.bookid, clickedBook);
+      for (const key in clickedBook.formats) {
+        if (key.indexOf("text/html") > -1) {
+          bookFormat = clickedBook.formats[key];
+          break;
+        } else if (key.indexOf("application/pdf") > -1) {
+          bookFormat = clickedBook.formats[key];
+          break;
+        } else if (key.indexOf("text/plain") > -1) {
+          bookFormat = clickedBook.formats[key];
+          break;
+        }
+      }
+      // bookFormat = ''; uncomment this line to see the error msg to work
+      if (bookFormat.length === 0) {
+        // toastr
+        this.toastr.error("No viewable version available", "ERROR", {
+          timeOut: 1500,
+          positionClass: 'toast-top-center'
+        });
 
-    for (const key in clickedBook.formats) {
-      if (key.indexOf("text/html") > -1) {
-        bookFormat = clickedBook.formats[key];
-        break;
-      } else if (key.indexOf("application/pdf") > -1) {
-        bookFormat = clickedBook.formats[key];
-        break;
-      } else if (key.indexOf("text/plain") > -1) {
-        bookFormat = clickedBook.formats[key];
-        break;
+      } else {
+        window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes");
       }
     }
-
-    // bookFormat = ''; uncomment this line to see the error msg to work
-    if (bookFormat.length === 0) {
-      // toastr
-      this.toastr.error("No viewable version available", "ERROR", {
-        timeOut: 1500,
-        positionClass: 'toast-top-center'
-      });
-
-    } else {
-      window.open(bookFormat, "_blank", "location=yes,height=720,width=980,scrollbars=yes,status=yes");
-    }
-
 
   }
 
@@ -125,14 +138,16 @@ export class BooksListComponent implements OnInit {
     // console.log(">> open zip file", url);
   }
 
-  onLoadMoreClicked(evt) {
-    evt.target.innerHTML = 'Loading...';
+  loadMoreBooks() {
     // console.log(">> load more", this.apiResponse.next);
+    $('#loadMoreSpinner').html(`<div class="spinner-border text-primary"></div>`);
 
     this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response: BooksApiResponse) => {
       this.apiResponse = response;
-      this.booksList.push(...response.results);
-      evt.target.innerHTML = 'Load More...';
+
+      this.booksList.push(...response.results.slice());
+
+      // $('#loadMoreSpinner').html('');
     },
       (error) => {
         this.isLoading = false;
@@ -149,25 +164,21 @@ export class BooksListComponent implements OnInit {
   onSearchQueryChange(evt) {
     if (this.searchQuery.length === 0) {
       // console.log(">> evt", evt.target.closest("button"));
-      if (evt.target && evt.target.closest("button")) {
-        let clickedBtn = evt.target.closest("button");
-        if (clickedBtn.id === "searchBtn") {
-          this.isLoading = false;
+      if (evt.target && evt.target.closest("button") && evt.target.closest("button").id === "searchBtn") {
+        this.isLoading = false;
 
-          this.toastr.info("Please type a name of book or author", "Information", {
-            timeOut: 2000,
-            positionClass: 'toast-top-center'
-          })
+        this.toastr.info("Please type a name of book or author", "Information", {
+          timeOut: 2000,
+          positionClass: 'toast-top-center'
+        })
 
-          return;
-        }
       }
 
       this.bookService.getBooksByTopic(this.genre);
     } else if (this.searchQuery.length > 0) {
       // console.log('>> make an api call', this.searchQuery);
       const queryParams = {
-        topic: this.genre,
+        topic: this.genre.toLowerCase(),
         searchQuery: this.searchQuery.toLowerCase()
       }
 
@@ -182,4 +193,9 @@ export class BooksListComponent implements OnInit {
 
     return randomImg.url;
   }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.windowScrollListener);
+  }
+
 }

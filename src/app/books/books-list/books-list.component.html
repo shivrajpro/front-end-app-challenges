@@ -36,7 +36,10 @@
         <app-loading-spinner></app-loading-spinner>
     </div>
 
-    <h1 *ngIf="booksList.length === 0">No books found!</h1>
+    <h1 *ngIf="booksList.length === 0 && !isLoading; else showResultsMsg">No books found for &#34;{{searchQuery}}&#34; </h1>
+    <ng-template #showResultsMsg>
+        <h3 *ngIf="searchQuery.length > 0 && !isLoading" >Showing results for {{searchQuery}} </h3>
+    </ng-template>
     <div class="book-cards-list" *ngIf="!isLoading">
         <ul *ngIf="booksList.length > 0">
             <!-- img, title and author -->
@@ -49,10 +52,7 @@
                 <p class="author"> {{getDisplayNameOfAuthor(book.authors)}}</p>
             </li>
         </ul>
-        <div class="load-more" *ngIf="apiResponse.next">
-            <p>
-                <button class="btn btn-primary" (click)="onLoadMoreClicked($event)">Load More...</button>
-            </p>
+        <div class="load-more" id="loadMoreSpinner" >
         </div>
     </div>
 </div>

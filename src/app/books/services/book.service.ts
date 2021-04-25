@@ -22,6 +22,7 @@ export class BookService {
 
   responseCache = new Map();
 
+  booksList:Book[] = [];
   api_error = new Subject<object>();
   booksListChanged = new BehaviorSubject<object>({});
 
@@ -36,12 +37,17 @@ export class BookService {
 
 
     if (env.mockMode) {
+      this.booksList.push(...mockData.booksApiResponse.results.slice());
       this.booksListChanged.next(mockData.booksApiResponse);
     } else if (this.responseCache.has(topicUrl)) {
       console.log(">> SERVING CACHED RESPONSE");
+      this.booksList.push(...this.responseCache.get(topicUrl).results.slice());
       this.booksListChanged.next(this.responseCache.get(topicUrl));
     } else {
       this.http.get<BooksApiResponse>(topicUrl).subscribe((response) => {
+
+        this.booksList.push(...response.results.slice());
+
         this.booksListChanged.next(response);
 
         this.responseCache.set(topicUrl, response);
@@ -59,13 +65,19 @@ export class BookService {
     // console.log(">> cache", this.responseCache);
 
     if (env.mockMode) {
+      this.booksList.push(...mockData.booksApiResponse.results.slice());
+
       this.booksListChanged.next(mockData.booksApiResponse);
     } else if (this.responseCache.has(searchUrl)) {
       console.log(">> SERVING CACHED RESPONSE");
+      this.booksList.push(...this.responseCache.get(searchUrl).results.slice());
+
       this.booksListChanged.next(this.responseCache.get(searchUrl));
     }
     else {
       this.http.get<BooksApiResponse>(searchUrl).subscribe((response) => {
+        this.booksList = response.results.slice();
+
         this.booksListChanged.next(response);
 
         this.responseCache.set(searchUrl, response);

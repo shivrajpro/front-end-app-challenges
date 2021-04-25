@@ -110,7 +110,8 @@
     }
 
     .spinner-wrapper {
-        height         : 500px;
+        // border: 1px solid red;
+        height         : 50vh;
         display        : flex;
         justify-content: center;
         align-items    : center;
@@ -118,6 +119,7 @@
 
     .load-more {
         // border: 1px solid red;
+        height: 40px;
         display        : flex;
         justify-content: center;
         align-items    : center;
