@@ -36,22 +36,19 @@
         <app-loading-spinner></app-loading-spinner>
     </div>
 
-    <div class="books-list-container" *ngIf="!isLoading">
-        <div class="books-list">
-            <h1 *ngIf="booksList.length === 0">No books found!</h1>
-            <ul *ngIf="booksList.length > 0">
-                <!-- img, title and author -->
-                <li *ngFor="let book of booksList; let i=index" (click)="onBookCardClick(book)" class="book-card">
-                    <p>
-                        <img src="{{getImageUrl(i)}}" loading="lazy" alt="book-cover">
-                    </p>
-                    <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
-                    <p class="author"> {{getDisplayNameOfAuthor(book.authors)}}</p>
-                </li>
-            </ul>
-
-        </div>
-
+    <h1 *ngIf="booksList.length === 0">No books found!</h1>
+    <div class="book-cards-list" *ngIf="!isLoading">
+        <ul *ngIf="booksList.length > 0">
+            <!-- img, title and author -->
+            <li class="book-card" *ngFor="let book of booksList; let i=index" [attr.data-bookid]="book.id"
+                (click)="onBookCardClick($event, book)">
+                <p>
+                    <img src="{{getImageUrl(i)}}" loading="lazy" alt="book-cover">
+                </p>
+                <p class="title"> {{getDisplayTitleOfBook(book.title)}}</p>
+                <p class="author"> {{getDisplayNameOfAuthor(book.authors)}}</p>
+            </li>
+        </ul>
         <div class="load-more" *ngIf="apiResponse.next">
             <p>
                 <button class="btn btn-primary" (click)="onLoadMoreClicked($event)">Load More...</button>

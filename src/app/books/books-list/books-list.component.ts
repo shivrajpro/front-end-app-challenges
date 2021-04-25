@@ -25,6 +25,8 @@ export class BooksListComponent implements OnInit {
   constructor(private bookService: BookService, private route: ActivatedRoute,
     private toastr: ToastrService) {
     this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1000);
+
+    window.addEventListener('scroll', _.throttle( this.bookListScroll, 300));
   }
 
   ngOnInit(): void {
@@ -61,6 +63,10 @@ export class BooksListComponent implements OnInit {
 
   }
 
+  bookListScroll = function () {
+    console.log('>> scroll');
+    
+  }
   getDisplayTitleOfBook(title: string) {
     if (title.length > 22)
       return title.substr(0, 22) + "...";
@@ -79,19 +85,23 @@ export class BooksListComponent implements OnInit {
     return dispName;
   }
 
-  onBookCardClick(b) {
-
+  onBookCardClick(evt) {
     let bookFormat = "";
 
-    for (const key in b.formats) {
+    let dataset = evt.target.closest("li").dataset;
+    let clickedBook = _.find(this.booksList, ['id', +dataset.bookid])
+
+    // console.log(">> clickedBook", dataset.bookid, clickedBook);
+
+    for (const key in clickedBook.formats) {
       if (key.indexOf("text/html") > -1) {
-        bookFormat = b.formats[key];
+        bookFormat = clickedBook.formats[key];
         break;
       } else if (key.indexOf("application/pdf") > -1) {
-        bookFormat = b.formats[key];
+        bookFormat = clickedBook.formats[key];
         break;
       } else if (key.indexOf("text/plain") > -1) {
-        bookFormat = b.formats[key];
+        bookFormat = clickedBook.formats[key];
         break;
       }
     }
@@ -158,7 +168,7 @@ export class BooksListComponent implements OnInit {
       // console.log('>> make an api call', this.searchQuery);
       const queryParams = {
         topic: this.genre,
-        searchQuery: this.searchQuery
+        searchQuery: this.searchQuery.toLowerCase()
       }
 
       this.bookService.getBooksByQuery(queryParams);

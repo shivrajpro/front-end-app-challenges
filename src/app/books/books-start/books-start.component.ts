@@ -20,11 +20,13 @@ export class BooksStartComponent implements OnInit {
 
     // console.log(dataset.genre);
 
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/books/${dataset.genre}`])
-    );
-
-    console.log('>> url', url);
-    window.open(url, '_blank');
+    if(dataset && dataset.genre){
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree([`/books/${dataset.genre}`])
+      );
+  
+      console.log('>> url', url);
+      window.open(url, '_blank');
+    }
   }
 }
