@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import * as _ from "lodash";
-import $ from "jquery";
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import $ from "jquery";
+import * as _ from "lodash";
 import { ToastrService } from 'ngx-toastr';
-
-import { BooksApiResponse, BookService } from '../services/book.service';
-import { Book } from '../models/book.model';
+import { Subscription } from 'rxjs';
 import { mockData } from "../../configs/mock";
 import { Author } from '../models/author.model';
+import { Book } from '../models/book.model';
+import { BooksApiResponse, BookService } from '../services/book.service';
+
 
 @Component({
   selector: 'app-books-list',
@@ -22,6 +23,10 @@ export class BooksListComponent implements OnInit, OnDestroy {
   apiResponse: BooksApiResponse;
   isLoading: boolean = false;
   searchInputFocused: boolean = false;
+  routeParamsSub: Subscription;
+  booksListChangedSub: Subscription;
+  getMoreBooksSub: Subscription;
+  apiErrorSub:Subscription;
   windowScrollListener;
 
   constructor(private bookService: BookService, private route: ActivatedRoute,
@@ -39,7 +44,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.route.params.subscribe((params: Params) => {
+    this.routeParamsSub = this.route.params.subscribe((params: Params) => {
 
       if (params["genre"]) {
         this.genre = params["genre"];
@@ -51,7 +56,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
 
     });
 
-    this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
+    this.booksListChangedSub = this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
       // console.log(">> in cmp", response.results);
       this.isLoading = !response.results;
 
@@ -61,7 +66,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.bookService.api_error.subscribe((e) => {
+    this.apiErrorSub = this.bookService.api_error.subscribe((e) => {
       // console.log(">> e=", e);
       this.isLoading = false;
       this.toastr.error("An unknown error occured!", "ERROR", {
@@ -142,7 +147,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
     // console.log(">> load more", this.apiResponse.next);
     $('#loadMoreSpinner').html(`<div class="spinner-border text-primary"></div>`);
 
-    this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response: BooksApiResponse) => {
+    this.getMoreBooksSub = this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response: BooksApiResponse) => {
       this.apiResponse = response;
 
       this.booksList.push(...response.results.slice());
@@ -196,6 +201,10 @@ export class BooksListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.windowScrollListener);
+    this.routeParamsSub.unsubscribe();
+    this.booksListChangedSub.unsubscribe();
+    this.getMoreBooksSub.unsubscribe();
+    this.apiErrorSub.unsubscribe();
   }
 
 }
