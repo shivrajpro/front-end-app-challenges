@@ -25,7 +25,6 @@ export class BooksListComponent implements OnInit, OnDestroy {
   searchInputFocused: boolean = false;
   routeParamsSub: Subscription;
   booksListChangedSub: Subscription;
-  getMoreBooksSub: Subscription;
   apiErrorSub:Subscription;
   windowScrollListener;
 
@@ -59,7 +58,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
     this.booksListChangedSub = this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
       // console.log(">> in cmp", response.results);
       this.isLoading = !response.results;
-
+      $('#loadMoreSpinner').html('');
       if(response.results){
         this.apiResponse = response;
         this.booksList = this.bookService.booksList.slice();
@@ -69,6 +68,8 @@ export class BooksListComponent implements OnInit, OnDestroy {
     this.apiErrorSub = this.bookService.api_error.subscribe((e) => {
       // console.log(">> e=", e);
       this.isLoading = false;
+      $('#loadMoreSpinner').html('');
+
       this.toastr.error("An unknown error occured!", "ERROR", {
         timeOut: 1500,
         positionClass: 'toast-top-center'
@@ -146,24 +147,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   loadMoreBooks() {
     // console.log(">> load more", this.apiResponse.next);
     $('#loadMoreSpinner').html(`<div class="spinner-border text-primary"></div>`);
-
-    this.getMoreBooksSub = this.bookService.getMoreBooks(this.apiResponse.next).subscribe((response: BooksApiResponse) => {
-      this.apiResponse = response;
-
-      this.booksList.push(...response.results.slice());
-
-      // $('#loadMoreSpinner').html('');
-    },
-      (error) => {
-        this.isLoading = false;
-        this.toastr.error("An unknown error occured!", "ERROR", {
-          timeOut: 1500,
-          positionClass: 'toast-top-center'
-        });
-
-      }
-    )
-
+    this.bookService.getMoreBooks(this.apiResponse.next);
   }
 
   onSearchQueryChange(evt) {
@@ -203,7 +187,6 @@ export class BooksListComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.windowScrollListener);
     this.routeParamsSub.unsubscribe();
     this.booksListChangedSub.unsubscribe();
-    this.getMoreBooksSub.unsubscribe();
     this.apiErrorSub.unsubscribe();
   }
 

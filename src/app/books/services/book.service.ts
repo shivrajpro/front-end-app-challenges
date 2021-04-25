@@ -37,16 +37,16 @@ export class BookService {
 
 
     if (env.mockMode) {
-      this.booksList.push(...mockData.booksApiResponse.results.slice());
+      this.booksList = mockData.booksApiResponse.results.slice();
       this.booksListChanged.next(mockData.booksApiResponse);
     } else if (this.responseCache.has(topicUrl)) {
       console.log(">> SERVING CACHED RESPONSE");
-      this.booksList.push(...this.responseCache.get(topicUrl).results.slice());
+      this.booksList = this.responseCache.get(topicUrl).results.slice();
       this.booksListChanged.next(this.responseCache.get(topicUrl));
     } else {
       this.http.get<BooksApiResponse>(topicUrl).subscribe((response) => {
 
-        this.booksList.push(...response.results.slice());
+        this.booksList = response.results.slice();
 
         this.booksListChanged.next(response);
 
@@ -65,12 +65,12 @@ export class BookService {
     // console.log(">> cache", this.responseCache);
 
     if (env.mockMode) {
-      this.booksList.push(...mockData.booksApiResponse.results.slice());
+      this.booksList = mockData.booksApiResponse.results.slice();
 
       this.booksListChanged.next(mockData.booksApiResponse);
     } else if (this.responseCache.has(searchUrl)) {
       console.log(">> SERVING CACHED RESPONSE");
-      this.booksList.push(...this.responseCache.get(searchUrl).results.slice());
+      this.booksList = this.responseCache.get(searchUrl).results.slice();
 
       this.booksListChanged.next(this.responseCache.get(searchUrl));
     }
@@ -93,11 +93,28 @@ export class BookService {
   getMoreBooks(url: string) {
     if (env.mockMode) {
 
-      var booksObsservable = new Observable((obs) => {
-        obs.next(mockData.booksApiResponse);
-      });
+      this.booksList.push(...mockData.booksApiResponse.results.slice());
 
-      return booksObsservable;
+      this.booksListChanged.next(mockData.booksApiResponse);
+    } else if (this.responseCache.has(url)) {
+      console.log(">> SERVING CACHED RESPONSE");
+      this.booksList.push(...this.responseCache.get(url).results.slice());
+
+      this.booksListChanged.next(this.responseCache.get(url));
+    }else{
+      this.http.get<BooksApiResponse>(url).subscribe((response) => {
+        this.booksList.push(...response.results.slice());
+
+        this.booksListChanged.next(response);
+
+        this.responseCache.set(url, response);
+
+      },
+        (error) => {
+          this.api_error.next(error);
+        }
+      )
+
     }
     return this.http.get<any>(url);
   }

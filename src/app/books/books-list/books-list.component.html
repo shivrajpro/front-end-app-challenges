@@ -36,15 +36,14 @@
         <app-loading-spinner></app-loading-spinner>
     </div>
 
-    <h1 *ngIf="booksList.length === 0 && !isLoading; else showResultsMsg">No books found for &#34;{{searchQuery}}&#34; </h1>
+    <h1 *ngIf="booksList.length === 0 && !isLoading; else showResultsMsg">No books found!</h1>
     <ng-template #showResultsMsg>
         <h3 *ngIf="searchQuery.length > 0 && !isLoading" >Showing results for {{searchQuery}} </h3>
     </ng-template>
     <div class="book-cards-list" *ngIf="!isLoading">
-        <ul *ngIf="booksList.length > 0">
+        <ul *ngIf="booksList.length > 0" (click)="onBookCardClick($event, book)">
             <!-- img, title and author -->
-            <li class="book-card" *ngFor="let book of booksList; let i=index" [attr.data-bookid]="book.id"
-                (click)="onBookCardClick($event, book)">
+            <li class="book-card" *ngFor="let book of booksList; let i=index" [attr.data-bookid]="book.id">
                 <p>
                     <img src="{{getImageUrl(i)}}" loading="lazy" alt="book-cover">
                 </p>
