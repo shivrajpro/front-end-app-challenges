@@ -116,6 +116,5 @@ export class BookService {
       )
 
     }
-    return this.http.get<any>(url);
   }
 }
