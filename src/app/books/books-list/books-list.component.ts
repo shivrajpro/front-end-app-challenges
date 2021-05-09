@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, RendererFactory2, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import $ from "jquery";
+// import $ from "jquery";
 import * as _ from "lodash";
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -25,11 +25,17 @@ export class BooksListComponent implements OnInit, OnDestroy {
   searchInputFocused: boolean = false;
   routeParamsSub: Subscription;
   booksListChangedSub: Subscription;
-  apiErrorSub:Subscription;
-  windowScrollListener;
+  apiErrorSub: Subscription;
+  windowScrollListener: EventListener = null;
+  renderer: Renderer2 = null;
+  @ViewChild('loadMoreSpinner', { static: false }) loadMoreSpinner: ElementRef;
 
   constructor(private bookService: BookService, private route: ActivatedRoute,
-    private toastr: ToastrService) {
+    private toastr: ToastrService, private rendererFactory: RendererFactory2) {
+
+    // intialize renderer
+    this.renderer = this.rendererFactory.createRenderer(null, null);
+
     this.onSearchQueryChange = _.debounce(this.onSearchQueryChange, 1000);
 
     this.bookListScroll = _.debounce(this.bookListScroll, 500);
@@ -58,8 +64,12 @@ export class BooksListComponent implements OnInit, OnDestroy {
     this.booksListChangedSub = this.bookService.booksListChanged.subscribe((response: BooksApiResponse) => {
       // console.log(">> in cmp", response.results);
       this.isLoading = !response.results;
-      $('#loadMoreSpinner').html('');
-      if(response.results){
+      // $('#loadMoreSpinner').html('');
+      
+      if (this.loadMoreSpinner)
+        this.loadMoreSpinner.nativeElement.remove();
+
+      if (response.results) {
         this.apiResponse = response;
         this.booksList = this.bookService.booksList.slice();
       }
@@ -68,7 +78,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
     this.apiErrorSub = this.bookService.api_error.subscribe((e) => {
       // console.log(">> e=", e);
       this.isLoading = false;
-      $('#loadMoreSpinner').html('');
+      // $('#loadMoreSpinner').html('');
 
       this.toastr.error("An unknown error occured!", "ERROR", {
         timeOut: 1500,
@@ -81,10 +91,16 @@ export class BooksListComponent implements OnInit, OnDestroy {
   bookListScroll() {
     // console.log('>> scroll', this.booksList);
 
-    let pixelsFromWindowBottomToBottom = 0 + $(document).height() - $(window).scrollTop() - $(window).height();
+    let docHeight = document.body.clientHeight,
+      scrollTop = window.scrollY,
+      winHeight = window.innerHeight;
 
-    if (pixelsFromWindowBottomToBottom < 100 && this.apiResponse.next)
+    let pixelsFromWindowBottomToBottom = 0 + docHeight - scrollTop - winHeight;
+
+    if (pixelsFromWindowBottomToBottom < 100 && this.apiResponse.next) {
+      // console.log('>> pixelsFromWindowBottomToBottom', pixelsFromWindowBottomToBottom);
       this.loadMoreBooks();
+    }
   }
 
   getDisplayTitleOfBook(title: string) {
@@ -146,7 +162,11 @@ export class BooksListComponent implements OnInit, OnDestroy {
 
   loadMoreBooks() {
     // console.log(">> load more", this.apiResponse.next);
-    $('#loadMoreSpinner').html(`<div class="spinner-border text-primary"></div>`);
+    const spinnerDiv = this.renderer.createElement('div');
+
+    this.renderer.setAttribute(spinnerDiv, 'class', 'spinner-border text-primary');
+
+    this.renderer.appendChild(this.loadMoreSpinner.nativeElement, spinnerDiv);
     this.bookService.getMoreBooks(this.apiResponse.next);
   }
 

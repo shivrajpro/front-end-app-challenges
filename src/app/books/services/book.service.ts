@@ -38,7 +38,9 @@ export class BookService {
 
     if (env.mockMode) {
       this.booksList = mockData.booksApiResponse.results.slice();
-      this.booksListChanged.next(mockData.booksApiResponse);
+      setTimeout(() => {
+        this.booksListChanged.next(mockData.booksApiResponse);
+      }, 1500);
     } else if (this.responseCache.has(topicUrl)) {
       console.log(">> SERVING CACHED RESPONSE");
       this.booksList = this.responseCache.get(topicUrl).results.slice();
