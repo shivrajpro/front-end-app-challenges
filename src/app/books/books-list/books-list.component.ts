@@ -67,7 +67,8 @@ export class BooksListComponent implements OnInit, OnDestroy {
       // $('#loadMoreSpinner').html('');
       
       if (this.loadMoreSpinner)
-        this.loadMoreSpinner.nativeElement.remove();
+        this.renderer.removeChild(this.loadMoreSpinner.nativeElement, this.loadMoreSpinner.nativeElement.firstElementChild);
+        // this.loadMoreSpinner.nativeElement.remove();
 
       if (response.results) {
         this.apiResponse = response;
@@ -103,12 +104,6 @@ export class BooksListComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDisplayTitleOfBook(title: string) {
-    if (title.length > 22)
-      return title.substr(0, 22) + "...";
-    return title;
-  }
-
   getDisplayNameOfAuthor(authors: Author[]) {
     let dispName = "";
 
@@ -124,7 +119,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   onBookCardClick(evt) {
     let bookFormat = "";
 
-    let dataset = evt.target.closest("li").dataset;
+    let dataset = evt.target.closest("li").dataset || null;
     if (dataset && dataset.bookid) {
       let clickedBook = _.find(this.booksList, ['id', +dataset.bookid])
 

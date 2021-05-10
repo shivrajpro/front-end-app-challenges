@@ -97,7 +97,9 @@ export class BookService {
 
       this.booksList.push(...mockData.booksApiResponse.results.slice());
 
-      this.booksListChanged.next(mockData.booksApiResponse);
+      setTimeout(() => {
+        this.booksListChanged.next(mockData.booksApiResponse);
+      }, 1000);
     } else if (this.responseCache.has(url)) {
       console.log(">> SERVING CACHED RESPONSE");
       this.booksList.push(...this.responseCache.get(url).results.slice());
