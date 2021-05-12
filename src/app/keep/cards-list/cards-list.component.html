@@ -1,1 +1,5 @@
 <p>cards-list works!</p>
+
+<div *ngFor="let card of cardsList" >
+    <app-card-item [cardItem]="card" ></app-card-item>
+</div>

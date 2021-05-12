@@ -1,0 +1,50 @@
+.card-item{
+    border: 1px solid black;
+    display: flex;
+    flex-flow: column nowrap;
+    // justify-content: space-evenly;
+    border-radius: 10px;
+    height: 150px;
+    width: 400px;
+    padding: 2px;
+
+    p{
+        margin-bottom: 0;
+    }
+
+    .card-top{
+        display: flex;
+        justify-content: space-between;
+
+        input{
+            border: none;
+            background: var(--igsDarkgrey);
+
+            &:focus{
+                outline: none;
+            }            
+        }
+
+        .icons i{
+            padding: 0px 5px;
+        }
+    }
+    textarea{
+        border: none;
+        background: var(--igsDarkgrey);
+        width: 100%;
+        height: 100%;
+        
+        &:focus{
+            outline: none;
+        }
+    }
+
+    div button{
+        float: right;
+
+        &:hover{
+            background:darkgray
+        }
+    }
+}
