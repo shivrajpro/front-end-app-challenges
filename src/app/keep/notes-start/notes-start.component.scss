@@ -1,0 +1,54 @@
+.heading{
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:10px;
+
+    .left{
+        border: 1px solid red;
+    }
+    
+    .right{
+        border: 1px solid blue;
+        display: flex;
+        
+        i{
+            padding:10px;
+        }
+    }
+}
+
+.add-new{
+    // border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+
+    .left{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // border: 1px solid blue;
+
+        div{
+            padding: 10px;
+        }
+        
+        .take-note p{
+            // border: 1px solid red;
+            margin-bottom: 0;
+            // padding: 0px 5px;
+        }
+        
+    }
+    
+    .right{
+        display: flex;
+        padding:10px;
+    }
+
+
+    i{
+        font-size: 1.5rem;
+    }
+}
