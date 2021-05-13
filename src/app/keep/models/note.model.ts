@@ -6,4 +6,8 @@ export class Note{
             this.description = '';
             this.isPinned = false;
         }
+
+        get _id(){
+            return this.id;
+        }
 }
