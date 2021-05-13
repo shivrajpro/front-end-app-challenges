@@ -1,7 +1,10 @@
 .container{
     // border: 1px solid black;
-    margin: 10px;
+    // margin: 10px;
+    margin: 10px auto;
+    width: 80%;
 }
+
 .heading {
     // border: 1px solid black;
     display        : flex;
@@ -10,7 +13,7 @@
     padding        : 10px;
 
     .left {
-        border: 1px solid red;
+        // border: 1px solid red;
     }
 
     .right {
@@ -61,5 +64,39 @@
 
     i {
         font-size: 1.5rem;
+    }
+}
+
+.note-item{
+    // border: 1px solid blue;
+    margin: 10px 0;
+    padding: 10px;
+
+    div{
+        margin: 5px 0;
+
+    }
+
+    .title input{
+        border: none;
+
+        &:focus{
+            outline: none;
+        }
+    }
+    
+    .description textarea{
+        border: none;
+        width: 100%;
+        min-height: 100px;
+        resize: none;
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    .bottom button{
+        background: lightgray;
     }
 }
