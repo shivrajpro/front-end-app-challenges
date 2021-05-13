@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-export class Card{
-  constructor(public title?:string, public description?:string, public isPinned?:boolean){
-    this.title = '';
-    this.description = '';
-    this.isPinned = false;
-  }
-}
 @Component({
   selector: 'app-notes-start',
   templateUrl: './notes-start.component.html',
@@ -14,7 +7,6 @@ export class Card{
 })
 export class NotesStartComponent implements OnInit {
 
-  emptyCardsList: Card[] = [];
 
   constructor() { }
 
@@ -22,7 +14,6 @@ export class NotesStartComponent implements OnInit {
   }
 
   onAddEmptyCard(){
-    this.emptyCardsList.push(new Card());
   }
 
 }

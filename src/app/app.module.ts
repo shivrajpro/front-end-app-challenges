@@ -14,8 +14,6 @@ import { BooksComponent } from './books/books.component';
 import { BooksListComponent } from './books/books-list/books-list.component';
 import { BooksStartComponent } from './books/books-start/books-start.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { CardsListComponent } from './keep/cards-list/cards-list.component';
-import { CardItemComponent } from './keep/cards-list/card-item/card-item.component';
 import { NotesStartComponent } from './keep/notes-start/notes-start.component';
 
 @NgModule({
@@ -25,8 +23,6 @@ import { NotesStartComponent } from './keep/notes-start/notes-start.component';
     BooksListComponent,
     BooksStartComponent,
     LoadingSpinnerComponent,
-    CardsListComponent,
-    CardItemComponent,
     NotesStartComponent
   ],
   imports: [
