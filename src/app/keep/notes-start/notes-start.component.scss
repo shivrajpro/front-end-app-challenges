@@ -3,6 +3,11 @@
     // margin: 10px;
     margin: 10px auto;
     width: 80%;
+
+    .btn:focus,.btn:active {
+        outline: none !important;
+        box-shadow: none;
+     }
 }
 
 .heading {
@@ -73,24 +78,39 @@
     border-radius: 10px;
     margin: 10px 0;
     padding: 10px;
+    width: 100%;
 
     div{
         margin: 5px 0;
-
+        width: 100%;
     }
 
     .top{
         display: flex;
         justify-content: space-between;
+        width: 100%;
+        
+        .title{
+            width: 80%;
+        }
         
         .title input{
             border: none;
-    
+            width: 100%;
+            transition: .5s;
+            font-weight: 400;
+            font-size: 1.2rem;
+            
             &:focus{
+                border-bottom: .5px solid darkgray;
                 outline: none;
             }
         }
-
+        
+        .icons{
+            width: 20%;
+        }
+        
         .icons i{
             margin: 0 5px;
             font-size: 1.5rem;

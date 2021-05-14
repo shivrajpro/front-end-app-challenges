@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Note } from '../models/note.model';
 import { NotesService } from '../services/notes.service';
 
@@ -16,17 +16,26 @@ export class NotesStartComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.notesService.notesListChanged.subscribe((newNotes)=>{
+    this.notesService.notesListChanged.subscribe((newNotes) => {
       this.notesList = newNotes;
     })
-  
+
+    this.notesService.addEmptyNote();
   }
 
-  onAddEmptyCard(){
-    this.notesService.addEmptyCard();
+  onAddEmptyNote() {
+    this.notesService.addEmptyNote();
   }
 
-  onDelete(noteItem: Note){
+  onDelete(noteItem: Note) {
     this.notesService.deleteNote(noteItem);
+  }
+
+  onSaveClick(){
+    // this.notesService.saveNotes();
+  }
+
+  onPinClick(noteItem:Note){
+    this.notesService.pinNote(noteItem);
   }
 }
