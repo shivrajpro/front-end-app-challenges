@@ -27,6 +27,14 @@
         // border: 1px solid blue;
         display: flex;
 
+        input{
+            border: none;
+            border-bottom: 1px solid lightgray;
+            
+            &:focus{
+                outline: none;
+            }
+        }
         i {
             padding: 10px;
             font-size: 1rem;

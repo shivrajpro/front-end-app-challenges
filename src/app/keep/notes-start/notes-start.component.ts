@@ -12,7 +12,8 @@ export class NotesStartComponent implements OnInit {
 
 
   notesList: Note[] = [];
-  emptyNoteAdded:boolean = false;
+  emptyNoteAdded: boolean = false;
+  searchNoteInput: string = '';
 
   constructor(private notesService: NotesService, private toastr: ToastrService) { }
 
@@ -32,37 +33,41 @@ export class NotesStartComponent implements OnInit {
   }
 
   onDelete(noteItem: Note) {
-    if(noteItem.title.length === 0 && noteItem.description.length === 0){
+    if (noteItem.title.length === 0 && noteItem.description.length === 0) {
       this.emptyNoteAdded = false;
 
-      if(!noteItem.isSaved){
-        this.toastr.warning('','Empty note discarded',{
+      if (!noteItem.isSaved) {
+        this.toastr.warning('', 'Empty note discarded', {
           timeOut: 800,
           positionClass: 'toast-top-center'
-        })  
+        })
       }
-    }else if(!noteItem.isSaved){
-      this.toastr.warning('','This is not saved',{
-        timeOut: 800,
-        positionClass: 'toast-top-center'
-      })
-      return;
+    } else if (noteItem.isSaved) {
+
+      if (confirm("Are you sure you want to delete this note?")) {
+
+        this.notesService.deleteNote(noteItem);
+
+        this.toastr.error('', 'Note Deleted Successfully', {
+          timeOut: 1500,
+          positionClass: 'toast-top-center'
+        })
+      }
     }
 
-    this.notesService.deleteNote(noteItem);
   }
 
-  onSaveAllData(){
-    console.log('>> new notes',this.notesList);
+  onSaveAllData() {
+    console.log('>> new notes', this.notesList);
     this.notesService.setNotes(this.notesList.slice());
     this.notesService.saveNotes();
   }
 
-  onPinClick(noteItem:Note){
+  onPinClick(noteItem: Note) {
     this.notesService.pinNote(noteItem);
   }
 
-  onGetAllNotesClick(){
+  onGetAllNotesClick() {
     this.notesService.getNotes();
   }
 }

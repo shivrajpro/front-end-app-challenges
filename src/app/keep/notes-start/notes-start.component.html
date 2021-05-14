@@ -5,7 +5,10 @@
             <div class="title">KEEP Notes</div>
         </div>
         <div class="right">
-            <div><i class="fa fa-search" aria-hidden="true"></i></div>
+            <div>
+                <input type="text" placeholder="search notes..." [(ngModel)]="searchNoteInput" >
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
             <div><i class="fa fa-external-link" aria-hidden="true"></i></div>
             <div><i class="fa fa-times" aria-hidden="true"></i></div>
         </div>
@@ -26,7 +29,7 @@
     </div> -->
 
     <!-- <app-card-item></app-card-item> -->
-    <div *ngFor="let note of notesList">
+    <div *ngFor="let note of notesList | filterNotes:searchNoteInput">
         <!-- <p>new note</p> -->
         <div class="note-item" [ngClass]="{'item-active':note.isActive}"
         (mouseover)="note.isActive = true"

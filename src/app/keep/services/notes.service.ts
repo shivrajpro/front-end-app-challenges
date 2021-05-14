@@ -20,19 +20,22 @@ export class NotesService {
   }
 
   saveNotes() {
-    const allNotes: Note[] = this.notesList.slice();
-
-    if (allNotes.length === 0)
-      return;
 
     this.notesList.map((n) => {
       n.isSaved = true;
       n.isActive = false;
     });
-    this.http.put(this.getNotesUrl, allNotes)
-      .subscribe((response) => {
-        console.log('>> response', response);
 
+
+    if (this.notesList.length === 0)
+      return;
+
+
+    this.http.put<Note[]>(this.getNotesUrl, this.notesList)
+      .subscribe((response) => {
+        console.log('>> after save', response);
+        this.notesList = response;
+        this.notesChanged();
       })
 
   }
@@ -56,7 +59,7 @@ export class NotesService {
     this.notesList.unshift(new Note());
     this.notesChanged();
 
-    console.log('>> notes', this.notesList);
+    console.log('>> emptynote', this.notesList);
   }
 
   addNote(newNote: Note) {
@@ -68,9 +71,7 @@ export class NotesService {
       return note.id !== noteToDelete.id;
     })
 
-    // console.log('>> delete',this.notesList);
-
-    this.notesChanged();
+    this.saveNotes();
   }
 
   pinNote(noteItem: Note) {
