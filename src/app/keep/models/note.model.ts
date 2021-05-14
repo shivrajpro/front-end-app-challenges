@@ -1,7 +1,7 @@
 export class Note{
-    constructor(private id?:number, public title?:string, public description?:string,
+    constructor(private _id?:number, public title?:string, public description?:string,
         public isPinned?:boolean, public isActive?:boolean, public isSaved?:boolean){
-            this.id = Math.floor(Math.random()*Date.now());
+            this._id = Math.floor(Math.random()*Date.now());
             this.title = '';
             this.description = '';
             this.isPinned = false;
@@ -9,7 +9,7 @@ export class Note{
             this.isSaved = false;
         }
 
-        get _id(){
-            return this.id;
+        get id(){
+            return this._id;
         }
 }

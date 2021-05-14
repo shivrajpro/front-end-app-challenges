@@ -28,7 +28,10 @@
     <!-- <app-card-item></app-card-item> -->
     <div *ngFor="let note of notesList">
         <!-- <p>new note</p> -->
-        <div class="note-item" [ngClass]="{'item-active':note.isActive}">
+        <div class="note-item" [ngClass]="{'item-active':note.isActive}"
+        (mouseover)="note.isActive = true"
+        (mouseout)="note.isActive = false"
+        >
             <div class="top">
                 <div class="title">
                     <input type="text" [(ngModel)]="note.title" placeholder="Title"
