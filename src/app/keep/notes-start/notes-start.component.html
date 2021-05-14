@@ -13,24 +13,29 @@
 
     <div class="add-new">
         <div class="left" (click)="onAddEmptyNote()">
-            <div><i class="fa fa-plus-square-o" aria-hidden="true"></i></div>
-            <div class="take-note">
-                <p>Take a note...</p>
-            </div>
+            <div class="px-2"><i class="fa fa-plus-square-o" aria-hidden="true"></i></div>
+            <p class="pt-2">Take a note...</p>
         </div>
-        <div class="right">
-            <div><i class="fa fa-check-square" aria-hidden="true"></i></div>
+        <div class="right mt-2">
+            <i class="fa fa-check-square" aria-hidden="true"></i>
         </div>
     </div>
-    <button class="btn btn-success" (click)="onSaveClick()" >Save</button>
+    <!-- <div class="api-btn-group my-2">
+        <button class="btn btn-success mx-2" (click)="onSaveAllData()" >Save All</button>
+        <button class="btn btn-primary" (click)="onGetAllNotesClick()" >Get All</button>
+    </div> -->
 
     <!-- <app-card-item></app-card-item> -->
     <div *ngFor="let note of notesList">
         <!-- <p>new note</p> -->
-        <div class="note-item">
+        <div class="note-item" [ngClass]="{'item-active':note.isActive}">
             <div class="top">
                 <div class="title">
-                    <input type="text" placeholder="title">
+                    <input type="text" [(ngModel)]="note.title" placeholder="Title"
+                    (focus)="note.isActive = true"
+                    (focusout)="note.isActive = false"
+                    (ngModelChange)="note.isSaved = false"
+                    >
                 </div>
                 <div class="icons">
                     <i class="fa fa-trash" (click)="onDelete(note)"></i>
@@ -41,11 +46,40 @@
                 </div>
             </div>
             <div class="description">
-                <textarea></textarea>
+                <textarea [(ngModel)]="note.description"
+                (focus)="note.isActive = true"
+                (focusout)="note.isActive = false"
+                (ngModelChange)="note.isSaved = false"
+                placeholder="take a note..."
+                ></textarea>
             </div>
             <div class="bottom">
-                <button class="btn btn-default">Done</button>
+                <button class="btn btn-default" (click)="onSaveAllData()">Save</button>
+                <p *ngIf="!note.isSaved && (note.title.length > 0 || note.description.length>0)"
+                class="text-danger my-2"
+                >Not Saved !</p>
             </div>
+        </div>
+    </div>
+    <p>below is hard-coded</p>
+    <div class="note-item">
+        <div class="top">
+            <div class="title">
+                <input type="text" placeholder="Title">
+            </div>
+            <div class="icons">
+                <i class="fa fa-trash"></i>
+                <i 
+                class="fa fa-thumb-tack"
+                ></i>
+            </div>
+        </div>
+        <div class="description">
+            <textarea></textarea>
+        </div>
+        <div class="bottom">
+            <button class="btn btn-default" (click)="onSaveAllData()">Done</button>
+            <p class="text-danger my-2">Not Saved !</p>
         </div>
     </div>
 </div>

@@ -17,10 +17,6 @@
     align-items    : center;
     padding        : 10px;
 
-    .left {
-        // border: 1px solid red;
-    }
-
     .right {
         // border: 1px solid blue;
         display: flex;
@@ -37,6 +33,11 @@
     display        : flex;
     justify-content: space-between;
 
+    i.fa-plus-square-o{
+        color: #FBBC04;
+        font-size: 2rem;
+    }
+    
     i{
         font-size: 1.5rem;
     }
@@ -47,29 +48,18 @@
         align-items    : center;
         border-radius: 10px;
         transition: .5s;
+        font-size: 1.5rem;
+        font-weight: bold;
         // border         : 1px solid blue;
 
         &:hover {
             cursor: pointer;
             background   : var(--igsDarkgray);
-        }
-
-        div {
-            padding: 10px;
-        }
-
-        .take-note p {
-            // border: 1px solid red;
-            margin-bottom: 0;
-            // padding: 0px 5px;
-        }
-
-        
+        }        
     }
     
     .right {
-        display: flex;
-        padding: 10px;
+        font-size: 1.5rem;
     }
 }
 
@@ -79,6 +69,10 @@
     margin: 10px 0;
     padding: 10px;
     width: 100%;
+
+    &.item-active{
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;;
+    }
 
     div{
         margin: 5px 0;
@@ -98,8 +92,8 @@
             border: none;
             width: 100%;
             transition: .5s;
-            font-weight: 400;
-            font-size: 1.2rem;
+            font-weight: 600;
+            font-size: 1.6rem;
             
             &:focus{
                 border-bottom: .5px solid darkgray;
@@ -129,6 +123,8 @@
     }
 
     .bottom button{
-        background: lightgray;
+        background: #C3C3C3;
+        border-radius: 20px;
+        font-weight: 500;
     }
 }

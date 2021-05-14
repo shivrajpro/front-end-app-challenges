@@ -20,7 +20,8 @@ export class NotesStartComponent implements OnInit {
       this.notesList = newNotes;
     })
 
-    this.notesService.addEmptyNote();
+    // this.notesService.addEmptyNote();
+    // this.notesService.getNotes();
   }
 
   onAddEmptyNote() {
@@ -31,11 +32,17 @@ export class NotesStartComponent implements OnInit {
     this.notesService.deleteNote(noteItem);
   }
 
-  onSaveClick(){
-    // this.notesService.saveNotes();
+  onSaveAllData(){
+    console.log('>> new notes',this.notesList);
+    this.notesService.setNotes(this.notesList.slice());
+    this.notesService.saveNotes();
   }
 
   onPinClick(noteItem:Note){
     this.notesService.pinNote(noteItem);
+  }
+
+  onGetAllNotesClick(){
+    this.notesService.getNotes();
   }
 }

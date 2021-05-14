@@ -8,11 +8,15 @@ import { Note } from '../models/note.model';
 })
 export class NotesService {
 
-  readonly notesUrl = 'https://ng-complete-guide-c1ec4.firebaseio.com/notes.json';
+  readonly getNotesUrl = 'https://ng-complete-guide-c1ec4.firebaseio.com/notes.json';
   notesList:Note[] = [];
   notesListChanged = new Subject<Note[]>();
 
   constructor(private http:HttpClient) { 
+  }
+
+  notesChanged(){
+    this.notesListChanged.next(this.notesList.slice());
   }
 
   saveNotes(){
@@ -21,19 +25,42 @@ export class NotesService {
     if(allNotes.length === 0)
       return;
 
-    this.http.put(this.notesUrl, allNotes)
+    this.notesList.map((n)=>{
+      n.isSaved = true;
+      n.isActive = false;
+    });
+    this.http.put(this.getNotesUrl, allNotes)
     .subscribe((response)=>{
       console.log('>> response',response);
       
     })
     
   }
+
+  setNotes(newNotes:Note[]){
+    this.notesList = newNotes.slice();
+    this.notesChanged();
+  }
+  
+  getNotes(){
+
+    this.http.get<Note[]>(this.getNotesUrl).subscribe((allNotes)=>{
+      console.log('>> getnotes',allNotes);
+      
+      this.notesList = allNotes.slice();
+      this.notesChanged();
+    })
+  }
+
   addEmptyNote(){
     this.notesList.push(new Note());
-    this.notesListChanged.next(this.notesList.slice());
+    this.notesChanged();
 
     console.log('>> notes',this.notesList);
-    
+  }
+
+  addNote(newNote: Note){
+    this.notesList.push(newNote);
   }
 
   deleteNote(noteToDelete:Note){
@@ -43,7 +70,7 @@ export class NotesService {
 
     // console.log('>> delete',this.notesList);
     
-    this.notesListChanged.next(this.notesList.slice());
+    this.notesChanged();
   }
 
   pinNote(noteItem:Note){
@@ -53,6 +80,6 @@ export class NotesService {
     theNote.isPinned = !theNote.isPinned;
     this.notesList.unshift(theNote);
   
-    this.notesListChanged.next(this.notesList.slice());
+    this.notesChanged();
   }
 }
