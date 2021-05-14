@@ -11,10 +11,10 @@
         </div>
     </div>
 
-    <div class="add-new">
+    <div *ngIf="!emptyNoteAdded" class="add-new">
         <div class="left" (click)="onAddEmptyNote()">
-            <div class="px-2"><i class="fa fa-plus-square-o" aria-hidden="true"></i></div>
-            <p class="pt-2">Take a note...</p>
+            <div class="mt-2 p-1"><i class="fa fa-plus-square-o" aria-hidden="true"></i></div>
+            <p class="px-2">Take a note...</p>
         </div>
         <div class="right mt-2">
             <i class="fa fa-check-square" aria-hidden="true"></i>
@@ -34,7 +34,7 @@
                     <input type="text" [(ngModel)]="note.title" placeholder="Title"
                     (focus)="note.isActive = true"
                     (focusout)="note.isActive = false"
-                    (ngModelChange)="note.isSaved = false"
+                    (ngModelChange)="note.isSaved = false; emptyNoteAdded = false"
                     >
                 </div>
                 <div class="icons">
@@ -49,7 +49,7 @@
                 <textarea [(ngModel)]="note.description"
                 (focus)="note.isActive = true"
                 (focusout)="note.isActive = false"
-                (ngModelChange)="note.isSaved = false"
+                (ngModelChange)="note.isSaved = false; emptyNoteAdded=false"
                 placeholder="take a note..."
                 ></textarea>
             </div>
@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <p>below is hard-coded</p>
+    <!-- <p>below is hard-coded</p>
     <div class="note-item">
         <div class="top">
             <div class="title">
@@ -81,5 +81,5 @@
             <button class="btn btn-default" (click)="onSaveAllData()">Done</button>
             <p class="text-danger my-2">Not Saved !</p>
         </div>
-    </div>
+    </div> -->
 </div>

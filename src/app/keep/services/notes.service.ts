@@ -53,7 +53,7 @@ export class NotesService {
   }
 
   addEmptyNote(){
-    this.notesList.push(new Note());
+    this.notesList.unshift(new Note());
     this.notesChanged();
 
     console.log('>> notes',this.notesList);
