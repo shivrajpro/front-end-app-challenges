@@ -150,7 +150,7 @@
     .bottom button {
         font-weight: 500;
         transition : .5s;
-        min-width  : 100px;
+        min-width  : 60px;
         min-height : 30px;
 
         &:hover {
@@ -161,7 +161,7 @@
 }
 
 .shine {
-    background       : #f6f7f8;
+    background       : #eff0f1;
     background-image : linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
     background-repeat: no-repeat;
     background-size  : 800px 104px;
