@@ -11,6 +11,7 @@ import { NotesService } from '../services/notes.service';
 export class NotesStartComponent implements OnInit {
 
 
+  isLoading:boolean = true;
   notesList: Note[] = [];
   emptyNoteAdded: boolean = false;
   searchNoteInput: string = '';
@@ -21,6 +22,9 @@ export class NotesStartComponent implements OnInit {
 
     this.notesService.notesListChanged.subscribe((newNotes) => {
       this.notesList = newNotes;
+      this.isLoading = false;
+    },(error)=>{
+      this.isLoading = false;
     })
 
     // this.notesService.addEmptyNote();
