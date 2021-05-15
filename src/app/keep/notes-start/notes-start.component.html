@@ -44,9 +44,10 @@
                     >
                 </div>
                 <div class="icons">
-                    <i class="fa fa-trash" (click)="onDelete(note)"></i>
+                    <i class="fa fa-trash" title="Delete this note" (click)="onDelete(note)"></i>
                     <i [ngStyle]="{color:note.isPinned?'#1a73e8':null}" 
                     class="fa fa-thumb-tack"
+                    title="Pin this note"
                     (click)="onPinClick(note)"
                     ></i>
                 </div>
@@ -60,7 +61,7 @@
                 ></textarea>
             </div>
             <div class="bottom">
-                <button class="btn btn-default" (click)="onSaveAllData()">Save</button>
+                <button class="btn btn-default" (click)="onSaveAllData()">Done</button>
                 <p *ngIf="!note.isSaved && (note.title.length > 0 || note.description.length>0)"
                 class="text-danger my-2"
                 >Not Saved !</p>

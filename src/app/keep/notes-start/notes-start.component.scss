@@ -86,7 +86,7 @@
     transition: .5s;
 
     &.item-active{
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
     div{
@@ -123,6 +123,13 @@
         .icons i{
             margin: 0 5px;
             font-size: 1.5rem;
+            transition: .5s;
+
+            &:hover{
+                transform: scale(1.1);
+                border-radius: 50px;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
         }
     }
     
@@ -138,8 +145,12 @@
     }
 
     .bottom button{
-        background: #C3C3C3;
-        border-radius: 20px;
         font-weight: 500;
+        transition: .5s;
+
+        &:hover{
+            background: #C3C3C3;
+            // border-radius: 20px;
+        }
     }
 }

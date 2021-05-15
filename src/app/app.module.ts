@@ -15,7 +15,7 @@ import { BooksListComponent } from './books/books-list/books-list.component';
 import { BooksStartComponent } from './books/books-start/books-start.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { NotesStartComponent } from './keep/notes-start/notes-start.component';
-import { FilterNotesPipe } from './keep/pipes/searchInput.pipe';
+import { FilterNotesPipe } from './keep/pipes/FilterNotes.pipe';
 
 @NgModule({
   declarations: [
