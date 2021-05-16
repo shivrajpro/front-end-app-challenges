@@ -42,7 +42,7 @@ export class NotesStartComponent implements OnInit {
 
       if (!noteItem.isSaved) {
         this.toastr.warning('', 'Empty note discarded', {
-          timeOut: 800,
+          timeOut: 1000,
           positionClass: 'toast-top-center'
         })
       }
@@ -57,6 +57,15 @@ export class NotesStartComponent implements OnInit {
           positionClass: 'toast-top-center'
         })
       }
+    } else{
+
+      this.notesList = this.notesList.filter((note)=>note.id !== noteItem.id);
+
+      this.toastr.warning('', 'That note was discarded without saving', {
+        timeOut: 1000,
+        positionClass: 'toast-top-center'
+      })
+
     }
 
   }

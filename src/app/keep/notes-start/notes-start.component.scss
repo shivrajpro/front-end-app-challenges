@@ -122,17 +122,21 @@
         .icons {
             width: 20%;
         }
-
+        // {color:note.isPinned?'#1a73e8':null, transform: note.isPinned ? 'rotateZ(-90deg)':null}
         .icons i {
             margin    : 0 5px;
             font-size : 1.5rem;
             transition: .5s;
 
             &:hover {
-                transform    : scale(1.1);
                 border-radius: 50px;
                 box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
             }
+        }
+
+        .fa-thumb-tack.pinned{
+            color: #1a73e8;
+            transform: rotateZ(-90deg)
         }
     }
 

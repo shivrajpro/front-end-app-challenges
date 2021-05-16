@@ -6,7 +6,7 @@
         </div>
         <div class="right">
             <div>
-                <input type="text" placeholder="search notes..." [(ngModel)]="searchNoteInput">
+                <input type="text" placeholder="search your notes..." [(ngModel)]="searchNoteInput">
                 <i class="fa fa-search" aria-hidden="true"></i>
             </div>
             <div><i class="fa fa-external-link" aria-hidden="true"></i></div>
@@ -32,22 +32,26 @@
     <ng-container *ngIf="!isLoading; else loadingBlock">
         <div *ngFor="let note of notesList | filterNotes:searchNoteInput">
             <!-- <p>new note</p> -->
-            <div class="note-item" [ngClass]="{'item-active':note.isActive}" (mouseover)="note.isActive = true"
+            <div class="note-item" [ngClass]="{'item-active':note.isActive}" 
+                (mouseover)="note.isActive = true"
                 (mouseout)="note.isActive = false">
                 <div class="top">
                     <div class="title">
-                        <input type="text" [(ngModel)]="note.title" placeholder="Title" (focus)="note.isActive = true"
+                        <input type="text" [(ngModel)]="note.title" placeholder="Title" 
+                            (focus)="note.isActive = true"
                             (focusout)="note.isActive = false"
                             (ngModelChange)="note.isSaved = false; emptyNoteAdded = false">
                     </div>
                     <div class="icons">
                         <i class="fa fa-trash" title="Delete this note" (click)="onDelete(note)"></i>
-                        <i [ngStyle]="{color:note.isPinned?'#1a73e8':null}" class="fa fa-thumb-tack" title="Pin this note"
-                            (click)="onPinClick(note)"></i>
+                        <i [ngClass]="{'pinned':note.isPinned}" class="fa fa-thumb-tack" 
+                           [title]= "note.isPinned ? 'Unpin this note' : 'Pin this note'"
+                           (click)="onPinClick(note)"></i>
                     </div>
                 </div>
                 <div class="description">
-                    <textarea [(ngModel)]="note.description" (focus)="note.isActive = true"
+                    <textarea [(ngModel)]="note.description" 
+                        (focus)="note.isActive = true"
                         (focusout)="note.isActive = false" (ngModelChange)="note.isSaved = false; emptyNoteAdded=false"
                         placeholder="take a note..."></textarea>
                 </div>
