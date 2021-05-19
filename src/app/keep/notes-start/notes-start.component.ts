@@ -11,7 +11,7 @@ import { NotesService } from '../services/notes.service';
 export class NotesStartComponent implements OnInit {
 
 
-  isLoading:boolean = true;
+  isLoading: boolean = true;
   notesList: Note[] = [];
   emptyNoteAdded: boolean = false;
   searchNoteInput: string = '';
@@ -23,7 +23,7 @@ export class NotesStartComponent implements OnInit {
     this.notesService.notesListChanged.subscribe((newNotes) => {
       this.notesList = newNotes;
       this.isLoading = false;
-    },(error)=>{
+    }, (error) => {
       this.isLoading = false;
     })
 
@@ -40,11 +40,14 @@ export class NotesStartComponent implements OnInit {
     if (noteItem.title.length === 0 && noteItem.description.length === 0) {
       this.emptyNoteAdded = false;
 
-      if (!noteItem.isSaved) {
+      if (!noteItem.isSaved && this.notesList.length > 1) {
+        this.notesList = this.notesList.filter((note) => note._id === noteItem._id);
+
         this.toastr.warning('', 'Empty note discarded', {
           timeOut: 800,
           positionClass: 'toast-top-center'
         })
+
       }
     } else if (noteItem.isSaved) {
 
@@ -57,6 +60,15 @@ export class NotesStartComponent implements OnInit {
           positionClass: 'toast-top-center'
         })
       }
+    } else {
+      
+      this.notesList = this.notesList.filter((note) => note._id !== noteItem._id);
+
+      this.toastr.warning('', 'Note discarded without saving', {
+        timeOut: 800,
+        positionClass: 'toast-top-center'
+      })
+
     }
 
   }
