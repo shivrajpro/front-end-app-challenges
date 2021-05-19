@@ -28,10 +28,14 @@ export class NotesService {
 
 
     if (this.notesList.length === 0){
-      this.notesList.push(new Note());
+      const newId = Math.floor(Math.random()*Date.now());
+      this.notesList.push(new Note(newId));
     }
 
 
+    console.log('>> in save',this.notesList);
+    
+    // return;
     this.http.put<Note[]>(this.getNotesUrl, this.notesList)
       .subscribe((response) => {
         console.log('>> after save', response);
@@ -57,7 +61,9 @@ export class NotesService {
   }
 
   addEmptyNote() {
-    this.notesList.unshift(new Note());
+    const newId = Math.floor(Math.random()*Date.now());
+
+    this.notesList.unshift(new Note(newId));
     this.notesChanged();
 
     console.log('>> emptynote', this.notesList);
@@ -69,7 +75,7 @@ export class NotesService {
 
   deleteNote(noteToDelete: Note) {
     this.notesList = this.notesList.filter((note) => {
-      return note._id !== noteToDelete._id;
+      return note.id !== noteToDelete.id;
     })
 
     this.saveNotes();
@@ -80,7 +86,7 @@ export class NotesService {
 
     if (noteItem.isPinned) {
 
-      const index = this.notesList.findIndex((note) => note._id === noteItem._id);
+      const index = this.notesList.findIndex((note) => note.id === noteItem.id);
       const theNote = this.notesList.splice(index, 1)[0];
 
       this.notesList.unshift(theNote);
@@ -90,7 +96,7 @@ export class NotesService {
       for (let i = 0; i < this.notesList.length; i++) {
         const element = this.notesList[i];
 
-        if (element._id === noteItem._id) {
+        if (element.id === noteItem.id) {
           element.isPinned = noteItem.isPinned;
           break;
         }
