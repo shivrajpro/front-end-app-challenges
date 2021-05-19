@@ -37,19 +37,28 @@ export class NotesStartComponent implements OnInit {
   }
 
   onDelete(noteItem: Note) {
-    if (noteItem.title.length === 0 && noteItem.description.length === 0) {
-      this.emptyNoteAdded = false;
+    
+    if (!noteItem.isSaved) {
+      this.notesList = this.notesList.filter((note) => note._id !== noteItem._id);
+      
+      if (noteItem.title.length === 0 && noteItem.description.length === 0) {
 
-      if (!noteItem.isSaved && this.notesList.length > 1) {
-        this.notesList = this.notesList.filter((note) => note._id === noteItem._id);
-
+        this.emptyNoteAdded = false;
         this.toastr.warning('', 'Empty note discarded', {
           timeOut: 1000,
           positionClass: 'toast-top-center'
         })
 
+      }else{
+
+        this.toastr.warning('', 'Note discarded without saving', {
+          timeOut: 1000,
+          positionClass: 'toast-top-center'
+        })
       }
-    } else if (noteItem.isSaved) {
+
+    }
+    else if (noteItem.isSaved) {
 
       if (confirm("Are you sure you want to delete this note?")) {
 
@@ -60,15 +69,6 @@ export class NotesStartComponent implements OnInit {
           positionClass: 'toast-top-center'
         })
       }
-    } else {
-      
-      this.notesList = this.notesList.filter((note) => note._id !== noteItem._id);
-
-      this.toastr.warning('', 'Note discarded without saving', {
-        timeOut: 800,
-        positionClass: 'toast-top-center'
-      })
-
     }
 
   }
