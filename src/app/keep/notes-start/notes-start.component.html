@@ -42,8 +42,10 @@
                     </div>
                     <div class="icons">
                         <i class="fa fa-trash" title="Delete this note" (click)="onDelete(note)"></i>
-                        <i [ngStyle]="{color:note.isPinned?'#1a73e8':null}" class="fa fa-thumb-tack" title="Pin this note"
-                            (click)="onPinClick(note)"></i>
+                        <i [ngClass]="{'pinned':note.isPinned}" class="fa fa-thumb-tack" 
+                        [title]= "note.isPinned ? 'Unpin this note' : 'Pin this note'"
+                        [ngStyle]="{color:note.isPinned?'#1a73e8':null}"
+                        (click)="onPinClick(note)"></i>
                     </div>
                 </div>
                 <div class="description">
