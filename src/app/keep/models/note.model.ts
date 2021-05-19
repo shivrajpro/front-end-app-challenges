@@ -1,5 +1,5 @@
 export class Note{
-    constructor(private _id?:number, public title?:string, public description?:string,
+    constructor(public _id?:number, public title?:string, public description?:string,
         public isPinned?:boolean, public isActive?:boolean, public isSaved?:boolean){
             this._id = Math.floor(Math.random()*Date.now());
             this.title = '';

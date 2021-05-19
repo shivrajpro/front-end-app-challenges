@@ -27,8 +27,9 @@ export class NotesService {
     });
 
 
-    if (this.notesList.length === 0)
-      return;
+    if (this.notesList.length === 0){
+      this.notesList.push(new Note());
+    }
 
 
     this.http.put<Note[]>(this.getNotesUrl, this.notesList)
@@ -68,7 +69,7 @@ export class NotesService {
 
   deleteNote(noteToDelete: Note) {
     this.notesList = this.notesList.filter((note) => {
-      return note.id !== noteToDelete.id;
+      return note._id !== noteToDelete._id;
     })
 
     this.saveNotes();
@@ -79,7 +80,7 @@ export class NotesService {
 
     if (noteItem.isPinned) {
 
-      const index = this.notesList.findIndex((note) => note.id === noteItem.id);
+      const index = this.notesList.findIndex((note) => note._id === noteItem._id);
       const theNote = this.notesList.splice(index, 1)[0];
 
       this.notesList.unshift(theNote);
@@ -89,7 +90,7 @@ export class NotesService {
       for (let i = 0; i < this.notesList.length; i++) {
         const element = this.notesList[i];
 
-        if (element.id === noteItem.id) {
+        if (element._id === noteItem._id) {
           element.isPinned = noteItem.isPinned;
           break;
         }
