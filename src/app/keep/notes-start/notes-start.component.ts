@@ -39,7 +39,7 @@ export class NotesStartComponent implements OnInit {
   onDelete(noteItem: Note) {
     
     if (!noteItem.isSaved) {
-      this.notesList = this.notesList.filter((note) => note._id !== noteItem._id);
+      this.notesService.deleteNote(noteItem);
       
       if (noteItem.title.length === 0 && noteItem.description.length === 0) {
 
@@ -57,6 +57,7 @@ export class NotesStartComponent implements OnInit {
         })
       }
 
+      console.log('>> onDelete',this.notesList);
     }
     else if (noteItem.isSaved) {
 
