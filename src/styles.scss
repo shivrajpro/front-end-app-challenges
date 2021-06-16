@@ -8,10 +8,6 @@
     box-sizing: border-box;
 }
 
-p{
-    margin: 0;
-}
-
 :root{
     --igsBlue:#5E56E7;
     --igsDarkgray: #A0A0A0;
@@ -20,11 +16,6 @@ p{
     --igsBlack:#333333;
 }
 
-i{
-    cursor: pointer;
-    font-size: 1.5rem;
-}
-
-.toast-top-center{
-    top:10px;
+body{
+    background: var(--igsMediumGray);
 }
